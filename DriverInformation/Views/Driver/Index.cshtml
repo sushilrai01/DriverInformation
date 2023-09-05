@@ -1,0 +1,75 @@
+﻿@model IEnumerable<DriverInformation.ViewModel.DriverInfoModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Driver Details</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-3.7.1.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <p>@Html.ActionLink("Add New Driver", "Create")</p>
+       <table class="table table-striped table-bordered table-hover">
+           <tr>
+               <th>
+                   @Html.DisplayNameFor(model => model.DriverId)
+               </th>
+               <th>
+                   @Html.DisplayNameFor(model => model.DriverName)
+               </th>
+               <th>
+                   @Html.DisplayNameFor(model => model.ContactNo)
+               </th>
+               <th>
+                   @Html.DisplayNameFor(model => model.Category)
+               </th>
+               <th>
+                   @Html.DisplayNameFor(model => model.Hobby)
+               </th>
+               <th>
+                   @Html.DisplayNameFor(model => model.Available)
+               </th>
+               <th></th>
+           </tr>
+
+           @foreach(var item in Model)
+            {
+       <tr>
+           <th>
+               @Html.DisplayFor(modelItem => item.DriverId)
+           </th>
+           <th>
+               @Html.DisplayFor(modelItem => item.DriverName)
+           </th>
+           <th>
+               @Html.DisplayFor(modelItem => item.ContactNo)
+           </th>
+           <th>
+               @Html.DisplayFor(modelItem => item.Category)
+           </th>
+           <th>
+               @Html.DisplayFor(modelItem => item.Hobby)
+           </th>
+           <th>
+               @Html.DisplayFor(modelItem => item.Available)
+           </th>
+           <th>
+               @Html.ActionLink("Edit", "Edit", new { id = item.DriverId }) | 
+               @Html.ActionLink("Delete", "Delete", new { id = item.DriverId })
+           </th>
+            
+       </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>
