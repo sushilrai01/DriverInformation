@@ -43,8 +43,10 @@ namespace DriverInformation.ViewModel
         public string Available { get; set; }
         public int HobbyId { get; set; }
         public string Hobby { get; set; }
-        
-        public List<DropdownModel> Dropdownlist { get; set; }
+
+        public List<DropdownModel> GenList { get; set; }
+        public List<DropdownModel> ActList { get; set; }
+        public List<DropdownModel> HobList { get; set; }
     }
 
 }

@@ -21,7 +21,7 @@
                 @using (Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
-                    <p><span >@Html.ActionLink(" Go Back", "Index",null, new { @class = " btn btn-secondary " })</span></p>
+                    <p><span>@Html.ActionLink(" Go Back", "Index", null, new { @class = " btn btn-secondary " })</span></p>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -44,8 +44,21 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.GenderId, "Genders", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-4">
-                            @Html.DropDownListFor(model => model.GenderId, new SelectList(Model.Dropdownlist, "ID", "Text"), "Select Gender", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.GenderId, new SelectList(Model.GenList, "ID", "Text"), "Select Gender", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.GenderId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ActiveId, "Is Active?", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @*@Html.RadioButtonFor(model => model.ActiveId, new SelectList(Model.ActList, "ID", "Text"), new { @class = "form-control" })*@
+                            @foreach (var item in Model.ActList)
+                            {
+                                 @Html.RadioButtonFor(model => model.ActiveId, item.ID, new { @class = "form-check-input" }) @item.TEXT
+                            }
+
+                            @Html.ValidationMessageFor(model => model.ActiveId, "", new { @class = "text-danger" })
                         </div>
                     </div>
 

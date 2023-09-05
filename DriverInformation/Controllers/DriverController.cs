@@ -29,6 +29,7 @@ namespace DriverInformation.Controllers
                                   Hobby = hobbytbl.Hobby,
                                   Available = activitytbl.Available,
                               }).ToList();
+
             return View(DriverInfo);
         }
 
@@ -36,10 +37,37 @@ namespace DriverInformation.Controllers
         public ActionResult Create()
         {
            DriverInfoModel model = new DriverInfoModel();
-           model.Dropdownlist = db.GenderTables
+           model.GenList = db.GenderTables
                                 .Select(x => new DropdownModel { ID = x.GenderId, TEXT = x.Category }).ToList();
-
+           model.ActList = db.ActivityTables
+                             .Select(x => new DropdownModel { ID = x.IsActive, TEXT = x.Available }).ToList();
+           model.HobList = db.HobbyTables
+                                .Select(x => new DropdownModel { ID = x.HobbyId, TEXT = x.Hobby }).ToList();
             return View(model);
+        }
+
+        //POST: Driver/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken ]
+        public  ActionResult Create(DriverInfoModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(model); 
+            }
+             
+            DriverTable drivertbl = new DriverTable();
+            drivertbl.DriverId = model.DriverId;
+            drivertbl.Name = model.DriverName;
+            drivertbl.ContactNo = model.ContactNo;  
+            drivertbl.GenderId = model.GenderId;
+            drivertbl.HobbyId = model.HobbyId;
+            drivertbl.IsActive = model.ActiveId;
+
+            db.DriverTables.Add(drivertbl);
+            db.SaveChanges();
+
+            return  RedirectToAction("Index");
         }
     }
 }
