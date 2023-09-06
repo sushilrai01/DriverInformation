@@ -12,7 +12,7 @@ namespace DriverInformation.Controllers
 
     public class DriverController : Controller
     {
-        private DriverManagementEntities db = new DriverManagementEntities();
+        private DriverManagementEntities1 db = new DriverManagementEntities1();
         // GET: Driver
         public ActionResult Index()
         {

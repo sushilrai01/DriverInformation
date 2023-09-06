@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DriverManagementModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ActivityTables">
+          <Key>
+            <PropertyRef Name="IsActive" />
+          </Key>
+          <Property Name="IsActive" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Available" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="DriverTables">
+          <Key>
+            <PropertyRef Name="DriverId" />
+          </Key>
+          <Property Name="DriverId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="ContactNo" Type="varchar" MaxLength="50" />
+          <Property Name="GenderId" Type="int" />
+          <Property Name="HobbyId" Type="int" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
+        <EntityType Name="GenderTables">
+          <Key>
+            <PropertyRef Name="GenderId" />
+          </Key>
+          <Property Name="GenderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HobbyTables">
+          <Key>
+            <PropertyRef Name="HobbyId" />
+          </Key>
+          <Property Name="HobbyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Hobby" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK_DriverTable_ActivityTable">
+          <End Role="ActivityTables" Type="Self.ActivityTables" Multiplicity="0..1" />
+          <End Role="DriverTables" Type="Self.DriverTables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActivityTables">
+              <PropertyRef Name="IsActive" />
+            </Principal>
+            <Dependent Role="DriverTables">
+              <PropertyRef Name="IsActive" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DriverTable_GenderTable">
+          <End Role="GenderTables" Type="Self.GenderTables" Multiplicity="0..1" />
+          <End Role="DriverTables" Type="Self.DriverTables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GenderTables">
+              <PropertyRef Name="GenderId" />
+            </Principal>
+            <Dependent Role="DriverTables">
+              <PropertyRef Name="GenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DriverTable_HobbyTable">
+          <End Role="HobbyTables" Type="Self.HobbyTables" Multiplicity="0..1" />
+          <End Role="DriverTables" Type="Self.DriverTables" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HobbyTables">
+              <PropertyRef Name="HobbyId" />
+            </Principal>
+            <Dependent Role="DriverTables">
+              <PropertyRef Name="HobbyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DriverManagementModel1StoreContainer">
+          <EntitySet Name="ActivityTables" EntityType="Self.ActivityTables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DriverTables" EntityType="Self.DriverTables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GenderTables" EntityType="Self.GenderTables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HobbyTables" EntityType="Self.HobbyTables" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DriverTable_ActivityTable" Association="Self.FK_DriverTable_ActivityTable">
+            <End Role="ActivityTables" EntitySet="ActivityTables" />
+            <End Role="DriverTables" EntitySet="DriverTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DriverTable_GenderTable" Association="Self.FK_DriverTable_GenderTable">
+            <End Role="GenderTables" EntitySet="GenderTables" />
+            <End Role="DriverTables" EntitySet="DriverTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DriverTable_HobbyTable" Association="Self.FK_DriverTable_HobbyTable">
+            <End Role="HobbyTables" EntitySet="HobbyTables" />
+            <End Role="DriverTables" EntitySet="DriverTables" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DriverManagementModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ActivityTable">
+          <Key>
+            <PropertyRef Name="IsActive" />
+          </Key>
+          <Property Name="IsActive" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Available" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="DriverTables" Relationship="Self.FK_DriverTable_ActivityTable" FromRole="ActivityTables" ToRole="DriverTables" />
+        </EntityType>
+        <EntityType Name="DriverTable">
+          <Key>
+            <PropertyRef Name="DriverId" />
+          </Key>
+          <Property Name="DriverId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GenderId" Type="Int32" />
+          <Property Name="HobbyId" Type="Int32" />
+          <Property Name="IsActive" Type="Int32" />
+          <NavigationProperty Name="ActivityTable" Relationship="Self.FK_DriverTable_ActivityTable" FromRole="DriverTables" ToRole="ActivityTables" />
+          <NavigationProperty Name="GenderTable" Relationship="Self.FK_DriverTable_GenderTable" FromRole="DriverTables" ToRole="GenderTables" />
+          <NavigationProperty Name="HobbyTable" Relationship="Self.FK_DriverTable_HobbyTable" FromRole="DriverTables" ToRole="HobbyTables" />
+        </EntityType>
+        <EntityType Name="GenderTable">
+          <Key>
+            <PropertyRef Name="GenderId" />
+          </Key>
+          <Property Name="GenderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DriverTables" Relationship="Self.FK_DriverTable_GenderTable" FromRole="GenderTables" ToRole="DriverTables" />
+        </EntityType>
+        <EntityType Name="HobbyTable">
+          <Key>
+            <PropertyRef Name="HobbyId" />
+          </Key>
+          <Property Name="HobbyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Hobby" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DriverTables" Relationship="Self.FK_DriverTable_HobbyTable" FromRole="HobbyTables" ToRole="DriverTables" />
+        </EntityType>
+        <Association Name="FK_DriverTable_ActivityTable">
+          <End Role="ActivityTables" Type="Self.ActivityTable" Multiplicity="0..1" />
+          <End Role="DriverTables" Type="Self.DriverTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActivityTables">
+              <PropertyRef Name="IsActive" />
+            </Principal>
+            <Dependent Role="DriverTables">
+              <PropertyRef Name="IsActive" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DriverTable_GenderTable">
+          <End Role="GenderTables" Type="Self.GenderTable" Multiplicity="0..1" />
+          <End Role="DriverTables" Type="Self.DriverTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GenderTables">
+              <PropertyRef Name="GenderId" />
+            </Principal>
+            <Dependent Role="DriverTables">
+              <PropertyRef Name="GenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DriverTable_HobbyTable">
+          <End Role="HobbyTables" Type="Self.HobbyTable" Multiplicity="0..1" />
+          <End Role="DriverTables" Type="Self.DriverTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HobbyTables">
+              <PropertyRef Name="HobbyId" />
+            </Principal>
+            <Dependent Role="DriverTables">
+              <PropertyRef Name="HobbyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DriverManagementEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ActivityTables" EntityType="Self.ActivityTable" />
+          <EntitySet Name="DriverTables" EntityType="Self.DriverTable" />
+          <EntitySet Name="GenderTables" EntityType="Self.GenderTable" />
+          <EntitySet Name="HobbyTables" EntityType="Self.HobbyTable" />
+          <AssociationSet Name="FK_DriverTable_ActivityTable" Association="Self.FK_DriverTable_ActivityTable">
+            <End Role="ActivityTables" EntitySet="ActivityTables" />
+            <End Role="DriverTables" EntitySet="DriverTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DriverTable_GenderTable" Association="Self.FK_DriverTable_GenderTable">
+            <End Role="GenderTables" EntitySet="GenderTables" />
+            <End Role="DriverTables" EntitySet="DriverTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DriverTable_HobbyTable" Association="Self.FK_DriverTable_HobbyTable">
+            <End Role="HobbyTables" EntitySet="HobbyTables" />
+            <End Role="DriverTables" EntitySet="DriverTables" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DriverManagementModel1StoreContainer" CdmEntityContainer="DriverManagementEntities1">
+          <EntitySetMapping Name="ActivityTables">
+            <EntityTypeMapping TypeName="DriverManagementModel1.ActivityTable">
+              <MappingFragment StoreEntitySet="ActivityTables">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DriverTables">
+            <EntityTypeMapping TypeName="DriverManagementModel1.DriverTable">
+              <MappingFragment StoreEntitySet="DriverTables">
+                <ScalarProperty Name="DriverId" ColumnName="DriverId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="GenderId" ColumnName="GenderId" />
+                <ScalarProperty Name="HobbyId" ColumnName="HobbyId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GenderTables">
+            <EntityTypeMapping TypeName="DriverManagementModel1.GenderTable">
+              <MappingFragment StoreEntitySet="GenderTables">
+                <ScalarProperty Name="GenderId" ColumnName="GenderId" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HobbyTables">
+            <EntityTypeMapping TypeName="DriverManagementModel1.HobbyTable">
+              <MappingFragment StoreEntitySet="HobbyTables">
+                <ScalarProperty Name="HobbyId" ColumnName="HobbyId" />
+                <ScalarProperty Name="Hobby" ColumnName="Hobby" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

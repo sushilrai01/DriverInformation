@@ -123,6 +123,16 @@
       <DependentUpon>EntityModel.edmx</DependentUpon>
       <LastGenOutput>EntityModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\xEntityModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>xEntityModel.edmx</DependentUpon>
+      <LastGenOutput>xEntityModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\xEntityModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>xEntityModel.edmx</DependentUpon>
+      <LastGenOutput>xEntityModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -141,10 +151,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ActivityTable.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>xEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DriverTable.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>xEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EntityModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -162,10 +172,25 @@
       <DependentUpon>EntityModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\GenderTable.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>xEntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HobbyTable.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>xEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\xEntityModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>xEntityModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\xEntityModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>xEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\xEntityModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>xEntityModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\DriverViewModel.cs" />
@@ -195,6 +220,13 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <EntityDeploy Include="Models\xEntityModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>xEntityModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\xEntityModel.edmx.diagram">
+      <DependentUpon>xEntityModel.edmx</DependentUpon>
+    </Content>
     <None Include="packages.config" />
     <Content Include="Views\Driver\Index.cshtml" />
     <Content Include="Scripts\bootstrap.min.js.map" />
