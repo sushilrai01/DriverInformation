@@ -89,7 +89,9 @@ namespace DriverInformation.Controllers
                         sb.Append(hob.Hobby + ",");
                     }
                 }
+                sb.Remove(sb.ToString().LastIndexOf(","), 1);
                 //if (model.HobList.Where(x => x.IsActive)
+                model.Hobby = sb.ToString();
                 drivertbl.Hobby = model.Hobby; //Hereeeeeeeeeeeee  
             }
             
