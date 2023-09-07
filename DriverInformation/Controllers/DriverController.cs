@@ -44,7 +44,7 @@ namespace DriverInformation.Controllers
            model.ActList = db.ActivityTables
                              .Select(x => new DropdownModel { ID = x.IsActive, TEXT = x.Available }).ToList();
            model.HobList = db.HobbyTables
-                                .Select(x => new HobbyModel { HobbyId = x.HobbyId, Hobby = x.Hobby, IsActive = x.IsActive == null?false:x.IsActive.Value }).ToList();
+                                .Select(x => new HobbyModel { HobbyId = x.HobbyId, Hobby = x.Hobby, IsActive = x.IsActive == null ? false : x.IsActive.Value }).ToList();
             return View(model);
         }
 
@@ -83,7 +83,7 @@ namespace DriverInformation.Controllers
                 {
                     if (hob.IsActive)
                     {
-                        sb.Append(hob.Hobby + ",");
+                        sb.Append(hob.Hobby + ", ");
                     }
                 }
                 sb.Remove(sb.ToString().LastIndexOf(","), 1);
@@ -129,6 +129,52 @@ namespace DriverInformation.Controllers
             return View(model);
         }
 
-        
+        //POST: Driver/Edit/id
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(DriverInfoModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.GenList = db.GenderTables
+                             .Select(x => new DropdownModel { ID = x.GenderId, TEXT = x.Category }).ToList();
+                model.ActList = db.ActivityTables
+                                  .Select(x => new DropdownModel { ID = x.IsActive, TEXT = x.Available }).ToList();
+                model.HobList = db.HobbyTables
+                                     .Select(x => new HobbyModel { HobbyId = x.HobbyId, Hobby = x.Hobby, IsActive = x.IsActive == null ? false : x.IsActive.Value }).ToList();
+                return View(model);
+            }
+
+            DriverTable driver = new DriverTable();
+
+            driver.DriverId = model.DriverId;
+            driver.Name = model.DriverName;
+            driver.ContactNo = model.ContactNo; 
+            driver.GenderId =  model.GenderId;
+            driver.IsActive = model.ActiveId;
+
+            if(model.HobList.Count(x => x.IsActive) == 0)
+            {
+                return View(model.AddModelError());
+            }
+            else
+            {
+                StringBuilder sb = new StringBuilder(); 
+                foreach(var hob in model.HobList)
+                {
+                    if (hob.IsActive)
+                    {
+                        sb.Append(hob.Hobby + ", ");
+                    }
+                }
+                sb.Remove(sb.ToString().LastIndexOf(","), 1);
+                model.Hobby = sb.ToString();    
+                driver.Hobby = model.Hobby;
+            }
+
+            db.Entry(driver).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

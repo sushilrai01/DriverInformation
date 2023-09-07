@@ -21,6 +21,7 @@
                 @using (Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.DriverId)
                     <p><span>@Html.ActionLink(" Cancel Editing", "Index", null, new { @class = " btn btn-secondary " })</span></p>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
