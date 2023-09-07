@@ -9,8 +9,8 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Driver Details</title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <title>Active Driver Details</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery-3.7.1.min.js"></script>
 
@@ -38,7 +38,7 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Available)|
-                        @Html.ActionLink("Show Active","Active", null, new { @class = " btn btn-primary " })
+                        @Html.ActionLink("Show All", "ShowAll", null, new { @class = " btn btn-secondary " })
                     </th>
                     <th></th>
                 </tr>
@@ -73,7 +73,7 @@
                 }
             </table>
         </div>
-   
+
     </div>
 </body>
 </html>

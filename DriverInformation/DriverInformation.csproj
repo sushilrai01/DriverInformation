@@ -205,6 +205,7 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Views\Driver\Create.cshtml" />
     <Content Include="Views\Driver\Edit.cshtml" />
+    <Content Include="Views\Driver\Active.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
