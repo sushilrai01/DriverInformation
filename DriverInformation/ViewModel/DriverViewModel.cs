@@ -55,7 +55,7 @@ namespace DriverInformation.ViewModel
 
         internal object AddModelError()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("!!Please Select a hobby!");
         }
     }
 

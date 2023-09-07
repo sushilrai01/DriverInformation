@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
 using System.Data.Entity;
 using DriverInformation.Models;
 using DriverInformation.ViewModel;
@@ -70,18 +71,14 @@ namespace DriverInformation.Controllers
             drivertbl.GenderId = model.GenderId;
             drivertbl.IsActive = model.ActiveId;
 
-            if(model.HobList.Count(x => x.IsActive) == 0)
+            if(model.HobList.Count(x => x.IsActive ) == 0)
             {
                 return View(model.AddModelError());
             }
             else
             {
-                StringBuilder sb = new StringBuilder();
-               //IList list = model.HobList;
-               // for (int i = 0; i < list.Count; i++)
-               // {
-               //     DriverInfoModel h = (DriverInfoModel)list[i];
-               // }
+               StringBuilder sb = new StringBuilder();
+              
                foreach(var hob in model.HobList)
                 {
                     if (hob.IsActive)
@@ -90,16 +87,48 @@ namespace DriverInformation.Controllers
                     }
                 }
                 sb.Remove(sb.ToString().LastIndexOf(","), 1);
-                //if (model.HobList.Where(x => x.IsActive)
                 model.Hobby = sb.ToString();
-                drivertbl.Hobby = model.Hobby; //Hereeeeeeeeeeeee  
+
+                drivertbl.Hobby = model.Hobby; //Mapping to DB table  
             }
-            
 
             db.DriverTables.Add(drivertbl);
             db.SaveChanges();
 
             return  RedirectToAction("Index");
         }
+
+        //GET: Driver/Edit/id
+        public ActionResult Edit(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            DriverInfoModel model = new DriverInfoModel();
+            var driverInfo = from driver in db.DriverTables
+                             join gender in db.GenderTables on driver.GenderId equals gender.GenderId
+                             join active in db.ActivityTables on driver.IsActive equals active.IsActive
+                             where driver.DriverId == id
+                             select new DriverInfoModel
+                             {
+                                 DriverId = driver.DriverId,
+                                 DriverName = driver.Name,
+                                 ContactNo = driver.ContactNo,  
+                                 Category = gender.Category,
+                                 Available = active.Available,
+                                 Hobby = driver.Hobby,
+                             };
+
+            model = driverInfo.FirstOrDefault();    
+            model.GenList = db.GenderTables
+                               .Select(x => new DropdownModel { ID = x.GenderId, TEXT = x.Category }).ToList();
+            model.ActList = db.ActivityTables
+                              .Select(x => new DropdownModel { ID = x.IsActive, TEXT = x.Available }).ToList();
+            model.HobList = db.HobbyTables
+                                 .Select(x => new HobbyModel { HobbyId = x.HobbyId, Hobby = x.Hobby, IsActive = x.IsActive == null ? false : x.IsActive.Value }).ToList();
+
+            return View(model);
+        }
+
+        
     }
 }
