@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DriverManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DriverManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ActivityTable">
           <Key>
             <PropertyRef Name="IsActive" />
@@ -22,6 +22,13 @@
           <Property Name="GenderId" Type="int" />
           <Property Name="IsActive" Type="int" />
           <Property Name="Hobby" Type="varchar(max)" />
+          <Property Name="Football" Type="bit" />
+          <Property Name="Cricket" Type="bit" />
+          <Property Name="Basketball" Type="bit" />
+          <Property Name="Singing" Type="bit" />
+          <Property Name="Dancing" Type="bit" />
+          <Property Name="Reading" Type="bit" />
+          <Property Name="Travelling" Type="bit" />
         </EntityType>
         <EntityType Name="GenderTable">
           <Key>
@@ -76,8 +83,7 @@
             <End Role="DriverTable" EntitySet="DriverTable" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DriverManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -101,6 +107,13 @@
           <Property Name="Hobby" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ActivityTable" Relationship="Self.FK_DriverTable_ActivityTable" FromRole="DriverTable" ToRole="ActivityTable" />
           <NavigationProperty Name="GenderTable" Relationship="Self.FK_DriverTable_GenderTable" FromRole="DriverTable" ToRole="GenderTable" />
+          <Property Name="Football" Type="Boolean" />
+          <Property Name="Cricket" Type="Boolean" />
+          <Property Name="Basketball" Type="Boolean" />
+          <Property Name="Singing" Type="Boolean" />
+          <Property Name="Dancing" Type="Boolean" />
+          <Property Name="Reading" Type="Boolean" />
+          <Property Name="Travelling" Type="Boolean" />
         </EntityType>
         <EntityType Name="GenderTable">
           <Key>
@@ -173,6 +186,13 @@
           <EntitySetMapping Name="DriverTables">
             <EntityTypeMapping TypeName="DriverManagementModel.DriverTable">
               <MappingFragment StoreEntitySet="DriverTable">
+                <ScalarProperty Name="Travelling" ColumnName="Travelling" />
+                <ScalarProperty Name="Reading" ColumnName="Reading" />
+                <ScalarProperty Name="Dancing" ColumnName="Dancing" />
+                <ScalarProperty Name="Singing" ColumnName="Singing" />
+                <ScalarProperty Name="Basketball" ColumnName="Basketball" />
+                <ScalarProperty Name="Cricket" ColumnName="Cricket" />
+                <ScalarProperty Name="Football" ColumnName="Football" />
                 <ScalarProperty Name="DriverId" ColumnName="DriverId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />

@@ -35,6 +35,16 @@ namespace DriverInformation.ViewModel
         public string TEXT { get;set; }
     }
 
+    public class HobbiesModel
+    {
+        public bool Football { get; set; }
+        public bool Cricket { get; set; }
+        public bool Basketball { get; set; }
+        public bool Singing { get; set; }
+        public bool Dancing { get; set; }
+        public bool Reading { get; set; }
+        public bool Travelling { get; set; }
+    }
     public class DriverInfoModel
     {
         public int DriverId { get; set; }
@@ -44,11 +54,19 @@ namespace DriverInformation.ViewModel
         public string Category { get; set; }
         public int ActiveId { get; set; }
         public string Available { get; set; }
+        public bool Football { get; set; }
+        public bool Cricket { get; set; }
+        public bool Basketball { get; set; }
+        public bool Singing { get; set; }
+        public bool Dancing { get; set; }
+        public bool Reading { get; set; }
+        public bool Travelling { get; set; }
         //public int HobbyId { get; set; }
 
         //[Required(ErrorMessage = "Please Select A Hobby.")]
         public string Hobby { get; set; }
 
+        public List<HobbiesModel> HobbyList { get; set;}
         public List<HobbyModel> HobList { get; set; }
         public List<DropdownModel> GenList { get; set; }
         public List<DropdownModel> ActList { get; set; }

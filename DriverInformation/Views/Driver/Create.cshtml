@@ -54,19 +54,36 @@
                         <div class="col-md-4">
                             @for (var i = 0; i < Model.HobList.Count(); i++)
                             {
-                            <span class="m-2">
-                                @Html.HiddenFor(item => item.HobList[i].HobbyId)
-                                @Html.HiddenFor(item => item.HobList[i].Hobby)
-                                @Html.DisplayFor(item => item.HobList[i].Hobby)
-                                @Html.CheckBoxFor(item => item.HobList[i].IsActive, new { @class = "form-check-input text-bg-secondary" })
-                            </span>
-                             
+                                <span class="m-2">
+                                    @Html.HiddenFor(item => item.HobList[i].HobbyId)
+                                    @Html.HiddenFor(item => item.HobList[i].Hobby)
+                                    @Html.DisplayFor(item => item.HobList[i].Hobby)
+                                    @Html.CheckBoxFor(item => item.HobList[i].IsActive, new { @class = "form-check-input text-bg-secondary" })
+                                </span>
+
                             }
 
                             @Html.ValidationMessageFor(model => model.Hobby, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DriverId, "Select Hobbies:", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @for (var i = 0; i < Model.HobbyList.Count(); i++)
+                            {
+                                <span class="m-2">
+                                    @Html.HiddenFor(item => item.DriverId)
+                                    @*@Html.HiddenFor(item => item.HobbyList[i].Hobby)*@
+                                    @Html.DisplayFor(item => item.HobbyList[i])
+                                    @Html.CheckBoxFor(item => item.HobbyList[i], new { @class = "form-check-input text-bg-secondary" })
+                                </span>
+
+                            }
+
+                            @Html.ValidationMessageFor(model => model.Hobby, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.ActiveId, "Is Active?", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-4">

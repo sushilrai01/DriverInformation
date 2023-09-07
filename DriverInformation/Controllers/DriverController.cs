@@ -47,11 +47,12 @@ namespace DriverInformation.Controllers
                               {
                                   DriverId = drivertbl.DriverId,
                                   DriverName = drivertbl.Name,
+                                  GenderId = gendertbl.GenderId,
                                   ContactNo = drivertbl.ContactNo,
                                   Category = gendertbl.Category,
                                   Hobby = drivertbl.Hobby,
                                   Available = activitytbl.Available,
-                              }).ToList();
+                              }).ToList().OrderBy(x => x.GenderId);
 
             return View(DriverInfo);
         }
@@ -72,6 +73,18 @@ namespace DriverInformation.Controllers
                              .Select(x => new DropdownModel { ID = x.IsActive, TEXT = x.Available }).ToList();
            model.HobList = db.HobbyTables
                                 .Select(x => new HobbyModel { HobbyId = x.HobbyId, Hobby = x.Hobby, IsActive = x.IsActive == null ? false : x.IsActive.Value }).ToList();
+            model.HobbyList = db.DriverTables
+                                .Select(x => new HobbiesModel
+                                {
+                                    Football = x.Football == null ? false : x.Football.Value,
+                                    Basketball = x.Basketball == null ? false : x.Basketball.Value,
+                                    Cricket = x.Cricket == null ? false : x.Cricket.Value,
+                                    Singing = x.Singing == null ? false : x.Singing.Value,
+                                    Dancing = x.Dancing == null ? false : x.Dancing.Value,
+                                    Reading = x.Reading == null ? false : x.Reading.Value,
+                                    Travelling = x.Travelling == null ? false : x.Travelling.Value,
+                                }).ToList();
+
             return View(model);
         }
 

@@ -37,7 +37,7 @@
                         @Html.DisplayNameFor(model => model.Hobby)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Available)|
+                        @Html.DisplayNameFor(model => model.Available)
                         @Html.ActionLink("Show Active","Active", null, new { @class = " btn btn-primary " })
                     </th>
                     <th></th>
@@ -46,28 +46,28 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <th>
+                        <td>
                             @Html.DisplayFor(modelItem => item.DriverId)
-                        </th>
-                        <th>
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.DriverName)
-                        </th>
-                        <th>
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.ContactNo)
-                        </th>
-                        <th>
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.Category)
-                        </th>
-                        <th>
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.Hobby)
-                        </th>
-                        <th>
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.Available)
-                        </th>
-                        <th>
+                        </td>
+                        <td>
                             @Html.ActionLink("Edit", "Edit", new { id = item.DriverId }) |
                             @Html.ActionLink("Delete", "Delete", new { id = item.DriverId })
-                        </th>
+                        </td>
 
                     </tr>
                 }
