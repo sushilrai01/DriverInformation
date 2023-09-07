@@ -20,8 +20,8 @@
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="ContactNo" Type="varchar" MaxLength="50" />
           <Property Name="GenderId" Type="int" />
-          <Property Name="HobbyId" Type="int" />
           <Property Name="IsActive" Type="int" />
+          <Property Name="Hobby" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="GenderTable">
           <Key>
@@ -36,6 +36,7 @@
           </Key>
           <Property Name="HobbyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Hobby" Type="varchar" MaxLength="20" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <Association Name="FK_DriverTable_ActivityTable">
           <End Role="ActivityTable" Type="Self.ActivityTable" Multiplicity="0..1" />
@@ -61,18 +62,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DriverTable_HobbyTable">
-          <End Role="HobbyTable" Type="Self.HobbyTable" Multiplicity="0..1" />
-          <End Role="DriverTable" Type="Self.DriverTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="HobbyTable">
-              <PropertyRef Name="HobbyId" />
-            </Principal>
-            <Dependent Role="DriverTable">
-              <PropertyRef Name="HobbyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="DriverManagementModelStoreContainer">
           <EntitySet Name="ActivityTable" EntityType="Self.ActivityTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DriverTable" EntityType="Self.DriverTable" Schema="dbo" store:Type="Tables" />
@@ -84,10 +73,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_DriverTable_GenderTable" Association="Self.FK_DriverTable_GenderTable">
             <End Role="GenderTable" EntitySet="GenderTable" />
-            <End Role="DriverTable" EntitySet="DriverTable" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DriverTable_HobbyTable" Association="Self.FK_DriverTable_HobbyTable">
-            <End Role="HobbyTable" EntitySet="HobbyTable" />
             <End Role="DriverTable" EntitySet="DriverTable" />
           </AssociationSet>
         </EntityContainer>
@@ -112,11 +97,10 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ContactNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="GenderId" Type="Int32" />
-          <Property Name="HobbyId" Type="Int32" />
           <Property Name="IsActive" Type="Int32" />
+          <Property Name="Hobby" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ActivityTable" Relationship="Self.FK_DriverTable_ActivityTable" FromRole="DriverTable" ToRole="ActivityTable" />
           <NavigationProperty Name="GenderTable" Relationship="Self.FK_DriverTable_GenderTable" FromRole="DriverTable" ToRole="GenderTable" />
-          <NavigationProperty Name="HobbyTable" Relationship="Self.FK_DriverTable_HobbyTable" FromRole="DriverTable" ToRole="HobbyTable" />
         </EntityType>
         <EntityType Name="GenderTable">
           <Key>
@@ -132,7 +116,7 @@
           </Key>
           <Property Name="HobbyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Hobby" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="DriverTables" Relationship="Self.FK_DriverTable_HobbyTable" FromRole="HobbyTable" ToRole="DriverTable" />
+          <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <Association Name="FK_DriverTable_ActivityTable">
           <End Role="ActivityTable" Type="Self.ActivityTable" Multiplicity="0..1" />
@@ -158,18 +142,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DriverTable_HobbyTable">
-          <End Role="HobbyTable" Type="Self.HobbyTable" Multiplicity="0..1" />
-          <End Role="DriverTable" Type="Self.DriverTable" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="HobbyTable">
-              <PropertyRef Name="HobbyId" />
-            </Principal>
-            <Dependent Role="DriverTable">
-              <PropertyRef Name="HobbyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="DriverManagementEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ActivityTables" EntityType="Self.ActivityTable" />
           <EntitySet Name="DriverTables" EntityType="Self.DriverTable" />
@@ -181,10 +153,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_DriverTable_GenderTable" Association="Self.FK_DriverTable_GenderTable">
             <End Role="GenderTable" EntitySet="GenderTables" />
-            <End Role="DriverTable" EntitySet="DriverTables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DriverTable_HobbyTable" Association="Self.FK_DriverTable_HobbyTable">
-            <End Role="HobbyTable" EntitySet="HobbyTables" />
             <End Role="DriverTable" EntitySet="DriverTables" />
           </AssociationSet>
         </EntityContainer>
@@ -209,8 +177,8 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
                 <ScalarProperty Name="GenderId" ColumnName="GenderId" />
-                <ScalarProperty Name="HobbyId" ColumnName="HobbyId" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Hobby" ColumnName="Hobby" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -227,6 +195,7 @@
               <MappingFragment StoreEntitySet="HobbyTable">
                 <ScalarProperty Name="HobbyId" ColumnName="HobbyId" />
                 <ScalarProperty Name="Hobby" ColumnName="Hobby" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

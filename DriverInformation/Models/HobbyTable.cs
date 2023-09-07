@@ -14,16 +14,8 @@ namespace DriverInformation.Models
     
     public partial class HobbyTable
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public HobbyTable()
-        {
-            this.DriverTables = new HashSet<DriverTable>();
-        }
-    
         public int HobbyId { get; set; }
         public string Hobby { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DriverTable> DriverTables { get; set; }
+        public Nullable<bool> IsActive { get; set; }
     }
 }

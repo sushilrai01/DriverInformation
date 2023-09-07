@@ -18,11 +18,10 @@ namespace DriverInformation.Models
         public string Name { get; set; }
         public string ContactNo { get; set; }
         public Nullable<int> GenderId { get; set; }
-        public Nullable<int> HobbyId { get; set; }
         public Nullable<int> IsActive { get; set; }
+        public string Hobby { get; set; }
     
         public virtual ActivityTable ActivityTable { get; set; }
         public virtual GenderTable GenderTable { get; set; }
-        public virtual HobbyTable HobbyTable { get; set; }
     }
 }

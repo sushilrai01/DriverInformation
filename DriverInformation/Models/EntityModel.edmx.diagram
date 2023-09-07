@@ -4,14 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="39da39d4488646a59c92e0cf3964e10a" Name="Diagram1">
-        <EntityTypeShape EntityType="DriverManagementModel.ActivityTable" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DriverManagementModel.DriverTable" Width="1.5" PointX="3.125" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DriverManagementModel.GenderTable" Width="1.5" PointX="5.75" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DriverManagementModel.HobbyTable" Width="1.5" PointX="6.125" PointY="0.5" IsExpanded="true" />
+      <Diagram DiagramId="ad22d02e9d784fbba887170aac9a031e" Name="Diagram1">
+        <EntityTypeShape EntityType="DriverManagementModel.ActivityTable" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DriverManagementModel.DriverTable" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DriverManagementModel.GenderTable" Width="1.5" PointX="5.375" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DriverManagementModel.HobbyTable" Width="1.5" PointX="5.125" PointY="2.875" IsExpanded="true" />
         <AssociationConnector Association="DriverManagementModel.FK_DriverTable_ActivityTable" ManuallyRouted="false" />
         <AssociationConnector Association="DriverManagementModel.FK_DriverTable_GenderTable" ManuallyRouted="false" />
-        <AssociationConnector Association="DriverManagementModel.FK_DriverTable_HobbyTable" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
