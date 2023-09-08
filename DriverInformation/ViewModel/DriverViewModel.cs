@@ -61,7 +61,6 @@ namespace DriverInformation.ViewModel
         public bool Dancing { get; set; }
         public bool Reading { get; set; }
         public bool Travelling { get; set; }
-        //public int HobbyId { get; set; }
 
         //[Required(ErrorMessage = "Please Select A Hobby.")]
         public string Hobby { get; set; }

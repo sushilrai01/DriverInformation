@@ -68,6 +68,50 @@
                         </div>
                     </div>
 
+                    //------CheckBoxes-------
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Hobby, "Select Hobbies", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            <span class="m-2">
+                                @Html.HiddenFor(model => model.DriverId)
+                                @Html.DisplayNameFor(model => model.Football)
+                                @Html.CheckBoxFor(model => model.Football, new { @class = "form-check-input text-bg-secondary" })
+                            </span>
+                            <span class="m-2">
+                                @Html.HiddenFor(model => model.DriverId)
+                                @Html.DisplayNameFor(model => model.Basketball)
+                                @Html.CheckBoxFor(model => model.Basketball, new { @class = "form-check-input text-bg-secondary" })
+                            </span>
+                            <span class="m-2">
+                                @Html.HiddenFor(model => model.DriverId)
+                                @Html.DisplayNameFor(model => model.Cricket)
+                                @Html.CheckBoxFor(model => model.Cricket, new { @class = "form-check-input text-bg-secondary" })
+                            </span>
+                            <span class="m-2">
+                                @Html.HiddenFor(model => model.DriverId)
+                                @Html.DisplayNameFor(model => model.Singing)
+                                @Html.CheckBoxFor(model => model.Singing, new { @class = "form-check-input text-bg-secondary" })
+                            </span>
+                            <span class="m-2">
+                                @Html.HiddenFor(model => model.DriverId)
+                                @Html.DisplayNameFor(model => model.Dancing)
+                                @Html.CheckBoxFor(model => model.Dancing, new { @class = "form-check-input text-bg-secondary" })
+                            </span>
+                            <span class="m-2">
+                                @Html.HiddenFor(model => model.DriverId)
+                                @Html.DisplayNameFor(model => model.Reading)
+                                @Html.CheckBoxFor(model => model.Reading, new { @class = "form-check-input text-bg-secondary" })
+                            </span>
+                            <span class="m-2">
+                                @Html.HiddenFor(model => model.DriverId)
+                                @Html.DisplayNameFor(model => model.Travelling)
+                                @Html.CheckBoxFor(model => model.Travelling, new { @class = "form-check-input text-bg-secondary" })
+                            </span>
+
+                            @Html.ValidationMessageFor(model => model.DriverId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         @Html.LabelFor(model => model.ActiveId, "Is Active?", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-4">

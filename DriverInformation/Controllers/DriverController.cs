@@ -64,17 +64,11 @@ namespace DriverInformation.Controllers
             return RedirectToAction("Index");
         }
         //GET: Driver/Create
-        public ActionResult Create()
+        public ActionResult Create(IEnumerable<DriverInfoModel> hobbies)
         {
            DriverInfoModel model = new DriverInfoModel();
-           model.GenList = db.GenderTables
-                                .Select(x => new DropdownModel { ID = x.GenderId, TEXT = x.Category }).ToList();
-           model.ActList = db.ActivityTables
-                             .Select(x => new DropdownModel { ID = x.IsActive, TEXT = x.Available }).ToList();
-           model.HobList = db.HobbyTables
-                                .Select(x => new HobbyModel { HobbyId = x.HobbyId, Hobby = x.Hobby, IsActive = x.IsActive == null ? false : x.IsActive.Value }).ToList();
-            model.HobbyList = db.DriverTables
-                                .Select(x => new HobbiesModel
+           var Hobbies = db.DriverTables
+                                .Select(x => new DriverInfoModel
                                 {
                                     Football = x.Football == null ? false : x.Football.Value,
                                     Basketball = x.Basketball == null ? false : x.Basketball.Value,
@@ -83,7 +77,14 @@ namespace DriverInformation.Controllers
                                     Dancing = x.Dancing == null ? false : x.Dancing.Value,
                                     Reading = x.Reading == null ? false : x.Reading.Value,
                                     Travelling = x.Travelling == null ? false : x.Travelling.Value,
-                                }).ToList();
+                                });
+            model = Hobbies.FirstOrDefault();
+            model.GenList = db.GenderTables
+                               .Select(x => new DropdownModel { ID = x.GenderId, TEXT = x.Category }).ToList();
+            model.ActList = db.ActivityTables
+                              .Select(x => new DropdownModel { ID = x.IsActive, TEXT = x.Available }).ToList();
+            model.HobList = db.HobbyTables
+                                 .Select(x => new HobbyModel { HobbyId = x.HobbyId, Hobby = x.Hobby, IsActive = x.IsActive == null ? false : x.IsActive.Value }).ToList();
 
             return View(model);
         }
@@ -95,13 +96,13 @@ namespace DriverInformation.Controllers
         {
             if(!ModelState.IsValid)
             {
-                model.GenList = db.GenderTables
-                               .Select(x => new DropdownModel { ID = x.GenderId, TEXT = x.Category }).ToList();
-                model.ActList = db.ActivityTables
-                                  .Select(x => new DropdownModel { ID = x.IsActive, TEXT = x.Available }).ToList();
-                model.HobList = db.HobbyTables
-                                     .Select(x => new HobbyModel { HobbyId = x.HobbyId, Hobby = x.Hobby, IsActive = x.IsActive == null ? false : x.IsActive.Value }).ToList();
-                return View(model); 
+                //model.GenList = db.GenderTables
+                //               .Select(x => new DropdownModel { ID = x.GenderId, TEXT = x.Category }).ToList();
+                //model.ActList = db.ActivityTables
+                //                  .Select(x => new DropdownModel { ID = x.IsActive, TEXT = x.Available }).ToList();
+                //model.HobList = db.HobbyTables
+                //                     .Select(x => new HobbyModel { HobbyId = x.HobbyId, Hobby = x.Hobby, IsActive = x.IsActive == null ? false : x.IsActive.Value }).ToList();
+                return View(model);
             }
              
             DriverTable drivertbl = new DriverTable();
@@ -110,8 +111,16 @@ namespace DriverInformation.Controllers
             drivertbl.ContactNo = model.ContactNo;  
             drivertbl.GenderId = model.GenderId;
             drivertbl.IsActive = model.ActiveId;
+            drivertbl.Football = model.Football;
+            drivertbl.Basketball = model.Basketball;
+            drivertbl.Cricket = model.Cricket;
+            drivertbl.Singing = model.Singing;
+            drivertbl.Dancing = model.Dancing;
+            drivertbl.Reading = model.Reading;
+            drivertbl.Travelling = model.Travelling;
 
-            if(model.HobList.Count(x => x.IsActive ) == 0)
+            //----Hobby list from HObby table-----
+            if (model.HobList.Count(x => x.IsActive ) == 0)
             {
                 return View(model.AddModelError());
             }
@@ -156,7 +165,14 @@ namespace DriverInformation.Controllers
                                  Category = gender.Category,
                                  Available = active.Available,
                                  Hobby = driver.Hobby,
-                             };
+                                 Football = driver.Football == null ? false : driver.Football.Value,
+                                 Basketball = driver.Basketball == null ? false : driver.Basketball.Value,
+                                 Cricket = driver.Cricket == null ? false : driver.Cricket.Value,
+                                 Singing = driver.Singing == null ? false : driver.Singing.Value,
+                                 Dancing = driver.Dancing == null ? false : driver.Dancing.Value,
+                                 Reading = driver.Reading == null ? false : driver.Reading.Value,
+                                 Travelling = driver.Travelling == null ? false : driver.Travelling.Value,
+                                };
 
             model = driverInfo.FirstOrDefault();    
             model.GenList = db.GenderTables
