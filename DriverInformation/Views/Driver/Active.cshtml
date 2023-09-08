@@ -65,8 +65,11 @@
                             @Html.DisplayFor(modelItem => item.Available)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.DriverId }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.DriverId })
+
+                            @Html.ActionLink("Edit", "Edit", null, new { id = item.DriverId }, new { @class = " btn btn-info " })
+                            <span class="m-1 mb-2">
+                                @Html.ActionLink("Delete", "Delete", null, new { id = item.DriverId }, new { @class = " btn btn-danger " })
+                            </span>
                         </td>
 
                     </tr>

@@ -209,12 +209,12 @@ namespace DriverInformation.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.GenList = db.GenderTables
-                             .Select(x => new DropdownModel { ID = x.GenderId, TEXT = x.Category }).ToList();
-                model.ActList = db.ActivityTables
-                                  .Select(x => new DropdownModel { ID = x.IsActive, TEXT = x.Available }).ToList();
-                model.HobList = db.HobbyTables
-                                     .Select(x => new HobbyModel { HobbyId = x.HobbyId, Hobby = x.Hobby, IsActive = x.IsActive == null ? false : x.IsActive.Value }).ToList();
+                //model.GenList = db.GenderTables
+                //             .Select(x => new DropdownModel { ID = x.GenderId, TEXT = x.Category }).ToList();
+                //model.ActList = db.ActivityTables
+                //                  .Select(x => new DropdownModel { ID = x.IsActive, TEXT = x.Available }).ToList();
+                //model.HobList = db.HobbyTables
+                //                     .Select(x => new HobbyModel { HobbyId = x.HobbyId, Hobby = x.Hobby, IsActive = x.IsActive == null ? false : x.IsActive.Value }).ToList();
                 return View(model);
             }
 
@@ -270,5 +270,14 @@ namespace DriverInformation.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        //POST: Driver/Delete/id-----------jjjJSsss--------
+        public ActionResult Delete(int? id)
+        {
+            var driver = db.DriverTables.Find(id);
+            db.DriverTables.Remove(driver);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        } 
     }
 }
