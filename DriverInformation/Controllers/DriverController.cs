@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System ;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -67,18 +67,18 @@ namespace DriverInformation.Controllers
         public ActionResult Create(IEnumerable<DriverInfoModel> hobbies)
         {
            DriverInfoModel model = new DriverInfoModel();
-           var Hobbies = db.DriverTables
-                                .Select(x => new DriverInfoModel
-                                {
-                                    Football = x.Football == null ? false : x.Football.Value,
-                                    Basketball = x.Basketball == null ? false : x.Basketball.Value,
-                                    Cricket = x.Cricket == null ? false : x.Cricket.Value,
-                                    Singing = x.Singing == null ? false : x.Singing.Value,
-                                    Dancing = x.Dancing == null ? false : x.Dancing.Value,
-                                    Reading = x.Reading == null ? false : x.Reading.Value,
-                                    Travelling = x.Travelling == null ? false : x.Travelling.Value,
-                                });
-            model = Hobbies.FirstOrDefault();
+           //var Hobbies = db.DriverTables
+           //                     .Select(x => new DriverInfoModel
+           //                     {
+           //                         Football = x.Football == null ? false : x.Football.Value,
+           //                         Basketball = x.Basketball == null ? false : x.Basketball.Value,
+           //                         Cricket = x.Cricket == null ? false : x.Cricket.Value,
+           //                         Singing = x.Singing == null ? false : x.Singing.Value,
+           //                         Dancing = x.Dancing == null ? false : x.Dancing.Value,
+           //                         Reading = x.Reading == null ? false : x.Reading.Value,
+           //                         Travelling = x.Travelling == null ? false : x.Travelling.Value,
+           //                     });
+            //model = Hobbies.FirstOrDefault();
             model.GenList = db.GenderTables
                                .Select(x => new DropdownModel { ID = x.GenderId, TEXT = x.Category }).ToList();
             model.ActList = db.ActivityTables
@@ -136,6 +136,19 @@ namespace DriverInformation.Controllers
                     }
                 }
                 sb.Remove(sb.ToString().LastIndexOf(","), 1);
+
+                //--( > Start! <)--String concatenation for Hobbies in columns-----
+                sb.Append('\u002C');
+                if (model.Football) sb.Append("/Football");
+                 if (model.Basketball) sb.Append("/Basketball");
+                 if(model.Cricket) sb.Append("/Cricket");
+                 if (model.Singing) sb.Append("/Singing");
+                 if (model.Dancing) sb.Append("/Dancing");
+                 if (model.Reading) sb.Append("/Reading");
+                 if (model.Travelling) sb.Append("/Travelling");
+
+                //--( > End! <)--String concatenation for Hobbies in columns-----
+
                 model.Hobby = sb.ToString();
 
                 drivertbl.Hobby = model.Hobby; //Mapping to DB table  
@@ -165,6 +178,7 @@ namespace DriverInformation.Controllers
                                  Category = gender.Category,
                                  Available = active.Available,
                                  Hobby = driver.Hobby,
+
                                  Football = driver.Football == null ? false : driver.Football.Value,
                                  Basketball = driver.Basketball == null ? false : driver.Basketball.Value,
                                  Cricket = driver.Cricket == null ? false : driver.Cricket.Value,
@@ -172,6 +186,9 @@ namespace DriverInformation.Controllers
                                  Dancing = driver.Dancing == null ? false : driver.Dancing.Value,
                                  Reading = driver.Reading == null ? false : driver.Reading.Value,
                                  Travelling = driver.Travelling == null ? false : driver.Travelling.Value,
+
+                                 GenderId = gender.GenderId,
+                                 ActiveId = active.IsActive,
                                 };
 
             model = driverInfo.FirstOrDefault();    
@@ -208,8 +225,16 @@ namespace DriverInformation.Controllers
             driver.ContactNo = model.ContactNo; 
             driver.GenderId =  model.GenderId;
             driver.IsActive = model.ActiveId;
+            //Hobbbies List
+            driver.Football = model.Football;
+            driver.Basketball = model.Basketball;
+            driver.Cricket = model.Cricket;
+            driver.Singing = model.Singing;
+            driver.Dancing = model.Dancing;
+            driver.Reading = model.Reading;
+            driver.Travelling = model.Travelling;
 
-            if(model.HobList.Count(x => x.IsActive) == 0)
+            if (model.HobList.Count(x => x.IsActive) == 0)
             {
                 return View(model.AddModelError());
             }
@@ -224,6 +249,19 @@ namespace DriverInformation.Controllers
                     }
                 }
                 sb.Remove(sb.ToString().LastIndexOf(","), 1);
+
+                //--( > Start! <)--String concatenation for Hobbies in columns-----
+
+                if (model.Football) sb.Append("/Football");
+                if (model.Basketball) sb.Append("/Basketball");
+                if (model.Cricket) sb.Append("/Cricket");
+                if (model.Singing) sb.Append("/Singing");
+                if (model.Dancing) sb.Append("/Dancing");
+                if (model.Reading) sb.Append("/Reading");
+                if (model.Travelling) sb.Append("/Travelling");
+
+                //--( > End! <)--String concatenation for Hobbies in columns-----
+
                 model.Hobby = sb.ToString();    
                 driver.Hobby = model.Hobby;
             }
