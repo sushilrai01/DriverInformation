@@ -44,6 +44,7 @@ namespace DriverInformation.ViewModel
 
     public class HobbiesModel
     {
+        public List<DriverInfoModel> thuloModel{ get; set;}
         public bool Football { get; set; }
         public bool Cricket { get; set; }
         public bool Basketball { get; set; }
@@ -72,6 +73,7 @@ namespace DriverInformation.ViewModel
 
         //[Required(ErrorMessage = "Please Select A Hobby.")]
         public string Hobby { get; set; } //$ >_Concatenated hobbies here
+        public int MapId { get; set; }  
 
         public List<HobbiesModel> HobbyList { get; set;}
         public List<HobbyModel> HobList { get; set; }

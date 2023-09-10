@@ -138,13 +138,21 @@ namespace DriverInformation.Controllers
                 sb.Remove(sb.ToString().LastIndexOf(","), 1);
 
                 //--( > Start! <)--String concatenation for Hobbies in columns-----
-                if (model.Football) sb.Append("/Football");
-                 if (model.Basketball) sb.Append("/Basketball");
-                 if(model.Cricket) sb.Append("/Cricket");
-                 if (model.Singing) sb.Append("/Singing");
-                 if (model.Dancing) sb.Append("/Dancing");
-                 if (model.Reading) sb.Append("/Reading");
-                 if (model.Travelling) sb.Append("/Travelling");
+              if(!model.Basketball & !model.Football & !model.Cricket & !model.Singing & !model.Dancing & !model.Reading & !model.Travelling)
+                {
+                    return View(model.AddModelError());
+                }
+                else
+                {
+                    if (model.Football) sb.Append("/Football");
+                    if (model.Basketball) sb.Append("/Basketball");
+                    if (model.Cricket) sb.Append("/Cricket");
+                    if (model.Singing) sb.Append("/Singing");
+                    if (model.Dancing) sb.Append("/Dancing");
+                    if (model.Reading) sb.Append("/Reading");
+                    if (model.Travelling) sb.Append("/Travelling");
+                }
+                
 
                 //--( > End! <)--String concatenation for Hobbies in columns-----
 
@@ -154,12 +162,33 @@ namespace DriverInformation.Controllers
             }
 
             db.DriverTables.Add(drivertbl);
-            //Add to Mapping Table.........
-            MapDriverHob mapping = new MapDriverHob();  
-
             db.SaveChanges();
 
-            return  RedirectToAction("Index");
+            //>_Adding to Mapping Table.........
+            MapDriverHob mappingDH = new MapDriverHob();
+            mappingDH.MapId = model.MapId;
+
+            //HobbiesModel model2 = new HobbiesModel();
+            //model2.thuloModel = db.DriverTables.Select(x => new DriverInfoModel
+            //{
+            //    DriverId = x.DriverId,
+            //}).ToList();
+            //var abc = model2.thuloModel;
+            foreach (var hob in model.HobList)
+            {
+                if (hob.IsActive)
+                {
+                    mappingDH.DriverId = drivertbl.DriverId;
+                    //mappingDH.DriverId = abc.DriverId;
+                    mappingDH.HobbyId = hob.HobbyId;
+                    db.MapDriverHobs.Add(mappingDH);
+                    db.SaveChanges();
+                }
+            }
+            //>_Added to Mapping Table.........
+
+
+            return RedirectToAction("Index");
         }
 
         //GET: Driver/Edit/id
