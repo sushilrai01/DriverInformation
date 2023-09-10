@@ -55,6 +55,7 @@
                             @for (var i = 0; i < Model.HobList.Count(); i++)
                             {
                                 <span class="m-2">
+                                    @Html.HiddenFor(model => model.DriverId) 
                                     @Html.HiddenFor(item => item.HobList[i].HobbyId)
                                     @Html.HiddenFor(item => item.HobList[i].Hobby)
                                     @Html.DisplayFor(item => item.HobList[i].Hobby)
