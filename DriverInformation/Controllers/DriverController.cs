@@ -268,6 +268,39 @@ namespace DriverInformation.Controllers
 
             db.Entry(driver).State = EntityState.Modified;
             db.SaveChanges();
+
+            //Delete previous hobbies
+            var mapList = db.MapDriverHobs.Where(x => x.DriverId == model.DriverId)
+                        .Select(x => new MappingModel
+                        {
+                            MapId = x.MapId,
+                            DriverId = x.DriverId == null ? 0 : x.DriverId.Value,
+                            HobbyId = x.HobbyId == null ? 0 : x.HobbyId.Value,
+                        }).ToList();
+
+            foreach(var map in mapList)
+            {
+                var delMap = db.MapDriverHobs.Find(map.MapId);
+                db.MapDriverHobs.Remove(delMap);
+                db.SaveChanges();
+            }
+           
+            //>_Adding to Mapping Table.........
+            MapDriverHob mappingDH = new MapDriverHob();
+            mappingDH.MapId = model.MapId;
+
+            foreach (var hob in model.HobList)
+            {
+                if (hob.IsActive)
+                {
+                    mappingDH.DriverId = driver.DriverId;
+                    mappingDH.HobbyId = hob.HobbyId;
+                    db.MapDriverHobs.Add(mappingDH);
+                    db.SaveChanges();
+                }
+            }
+            //>_Added to Mapping Table.........
+
             return RedirectToAction("Index");
         }
 
