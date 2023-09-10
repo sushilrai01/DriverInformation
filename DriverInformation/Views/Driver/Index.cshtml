@@ -40,7 +40,7 @@
                         @Html.DisplayNameFor(model => model.Available)
                         @Html.ActionLink("Show Active", "Active", null, new { @class = " btn btn-primary " })
                     </th>
-                    <th></th>
+                    <th> </th>
                 </tr>
 
                 @foreach (var item in Model)
@@ -65,13 +65,15 @@
                             @Html.DisplayFor(modelItem => item.Available)
                         </td>
                         <td>
-                             @Html.ActionLink("Edit", "Edit",null, new { id = item.DriverId }, new { @class = " btn btn-info " })
-                            <span class="m-1"> 
-                            @Html.ActionLink("Delete", "Delete", null, new { id = item.DriverId }, new { @class = " btn btn-danger "})
-                            </span> 
-                            <div class="mt-1">
+                            @Html.ActionLink("Edit", "Edit", null, new { id = item.DriverId }, new { @class = " btn btn-info " })
+                            @Html.ActionLink("Show Details", "Details", null, new { id = item.DriverId }, new { @class = " btn btn-success " })
+                            <span class="m-1">
+                                @Html.ActionLink("Delete", "Delete", null, new { id = item.DriverId }, new { @class = " btn btn-danger " })
+                            </span>
+
+                            @*<div class="mt-1">
                                 <input type="button" value="Del_btn" id="deleteBtn" class="btn btn-danger " data-model-id="@item.DriverId" />
-                            </div>
+                            </div>*@
                         </td>
 
                     </tr>

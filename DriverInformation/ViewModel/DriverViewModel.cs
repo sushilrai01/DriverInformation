@@ -29,6 +29,13 @@ namespace DriverInformation.ViewModel
         //public Nullable<bool> IsActive { get; set; }
         public bool IsActive { get; set; }  
     }
+
+    public class MappingModel
+    {
+        public int MapId { get; set; }
+        public int DriverId { get; set; }
+        public int HobbyId { get; set; }
+    }
     public class DropdownModel
     {
         public int ID { get;set; } 
@@ -37,6 +44,7 @@ namespace DriverInformation.ViewModel
 
     public class HobbiesModel
     {
+        public List<DriverInfoModel> thuloModel{ get; set;}
         public bool Football { get; set; }
         public bool Cricket { get; set; }
         public bool Basketball { get; set; }
@@ -54,6 +62,7 @@ namespace DriverInformation.ViewModel
         public string Category { get; set; }
         public int ActiveId { get; set; }
         public string Available { get; set; }
+        //Hobbies.......
         public bool Football { get; set; }
         public bool Cricket { get; set; }
         public bool Basketball { get; set; }
@@ -63,7 +72,8 @@ namespace DriverInformation.ViewModel
         public bool Travelling { get; set; }
 
         //[Required(ErrorMessage = "Please Select A Hobby.")]
-        public string Hobby { get; set; }
+        public string Hobby { get; set; } //$ >_Concatenated hobbies here
+        public int MapId { get; set; }  
 
         public List<HobbiesModel> HobbyList { get; set;}
         public List<HobbyModel> HobList { get; set; }
