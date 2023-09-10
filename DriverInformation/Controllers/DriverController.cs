@@ -64,7 +64,7 @@ namespace DriverInformation.Controllers
             return RedirectToAction("Index");
         }
         //GET: Driver/Create
-        public ActionResult Create(IEnumerable<DriverInfoModel> hobbies)
+        public ActionResult Create()
         {
            DriverInfoModel model = new DriverInfoModel();
            //var Hobbies = db.DriverTables
@@ -138,7 +138,6 @@ namespace DriverInformation.Controllers
                 sb.Remove(sb.ToString().LastIndexOf(","), 1);
 
                 //--( > Start! <)--String concatenation for Hobbies in columns-----
-                sb.Append('\u002C');
                 if (model.Football) sb.Append("/Football");
                  if (model.Basketball) sb.Append("/Basketball");
                  if(model.Cricket) sb.Append("/Cricket");
@@ -155,6 +154,9 @@ namespace DriverInformation.Controllers
             }
 
             db.DriverTables.Add(drivertbl);
+            //Add to Mapping Table.........
+            MapDriverHob mapping = new MapDriverHob();  
+
             db.SaveChanges();
 
             return  RedirectToAction("Index");
