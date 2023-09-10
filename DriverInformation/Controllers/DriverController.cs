@@ -67,18 +67,7 @@ namespace DriverInformation.Controllers
         public ActionResult Create()
         {
            DriverInfoModel model = new DriverInfoModel();
-           //var Hobbies = db.DriverTables
-           //                     .Select(x => new DriverInfoModel
-           //                     {
-           //                         Football = x.Football == null ? false : x.Football.Value,
-           //                         Basketball = x.Basketball == null ? false : x.Basketball.Value,
-           //                         Cricket = x.Cricket == null ? false : x.Cricket.Value,
-           //                         Singing = x.Singing == null ? false : x.Singing.Value,
-           //                         Dancing = x.Dancing == null ? false : x.Dancing.Value,
-           //                         Reading = x.Reading == null ? false : x.Reading.Value,
-           //                         Travelling = x.Travelling == null ? false : x.Travelling.Value,
-           //                     });
-            //model = Hobbies.FirstOrDefault();
+       
             model.GenList = db.GenderTables
                                .Select(x => new DropdownModel { ID = x.GenderId, TEXT = x.Category }).ToList();
             model.ActList = db.ActivityTables
@@ -96,12 +85,6 @@ namespace DriverInformation.Controllers
         {
             if(!ModelState.IsValid)
             {
-                //model.GenList = db.GenderTables
-                //               .Select(x => new DropdownModel { ID = x.GenderId, TEXT = x.Category }).ToList();
-                //model.ActList = db.ActivityTables
-                //                  .Select(x => new DropdownModel { ID = x.IsActive, TEXT = x.Available }).ToList();
-                //model.HobList = db.HobbyTables
-                //                     .Select(x => new HobbyModel { HobbyId = x.HobbyId, Hobby = x.Hobby, IsActive = x.IsActive == null ? false : x.IsActive.Value }).ToList();
                 return View(model);
             }
              
@@ -122,7 +105,7 @@ namespace DriverInformation.Controllers
             //----Hobby list from HObby table-----
             if (model.HobList.Count(x => x.IsActive ) == 0)
             {
-                return View(model.AddModelError());
+                return View(model.AddModelError()); //View Error on not selecting at least one.
             }
             else
             {
@@ -168,25 +151,17 @@ namespace DriverInformation.Controllers
             MapDriverHob mappingDH = new MapDriverHob();
             mappingDH.MapId = model.MapId;
 
-            //HobbiesModel model2 = new HobbiesModel();
-            //model2.thuloModel = db.DriverTables.Select(x => new DriverInfoModel
-            //{
-            //    DriverId = x.DriverId,
-            //}).ToList();
-            //var abc = model2.thuloModel;
             foreach (var hob in model.HobList)
             {
                 if (hob.IsActive)
                 {
                     mappingDH.DriverId = drivertbl.DriverId;
-                    //mappingDH.DriverId = abc.DriverId;
                     mappingDH.HobbyId = hob.HobbyId;
                     db.MapDriverHobs.Add(mappingDH);
                     db.SaveChanges();
                 }
             }
             //>_Added to Mapping Table.........
-
 
             return RedirectToAction("Index");
         }
@@ -227,9 +202,28 @@ namespace DriverInformation.Controllers
                                .Select(x => new DropdownModel { ID = x.GenderId, TEXT = x.Category }).ToList();
             model.ActList = db.ActivityTables
                               .Select(x => new DropdownModel { ID = x.IsActive, TEXT = x.Available }).ToList();
-            model.HobList = db.HobbyTables
+
+            //Updating pre-selected Hobbies for checkbox
+            var MapList = db.MapDriverHobs.Where(x => x.DriverId == id).
+                Select(x => new MappingModel
+                {
+                    MapId = x.MapId,
+                    DriverId = x.DriverId ==null?0:x.DriverId.Value,
+                    HobbyId = x.HobbyId == null ? 0 : x.HobbyId.Value,
+                }).ToList();
+
+           var HobbyList = db.HobbyTables
                                  .Select(x => new HobbyModel { HobbyId = x.HobbyId, Hobby = x.Hobby, IsActive = x.IsActive == null ? false : x.IsActive.Value }).ToList();
 
+            foreach(var hob in HobbyList)
+            {
+                foreach(var map in MapList)
+                {
+                    if(map.HobbyId == hob.HobbyId) hob.IsActive = true;
+                }
+            }
+
+            model.HobList = HobbyList;
             return View(model);
         }
 
@@ -240,13 +234,7 @@ namespace DriverInformation.Controllers
         {
             if (!ModelState.IsValid)
             {
-                //model.GenList = db.GenderTables
-                //             .Select(x => new DropdownModel { ID = x.GenderId, TEXT = x.Category }).ToList();
-                //model.ActList = db.ActivityTables
-                //                  .Select(x => new DropdownModel { ID = x.IsActive, TEXT = x.Available }).ToList();
-                //model.HobList = db.HobbyTables
-                //                     .Select(x => new HobbyModel { HobbyId = x.HobbyId, Hobby = x.Hobby, IsActive = x.IsActive == null ? false : x.IsActive.Value }).ToList();
-                return View(model);
+               return View(model);
             }
 
             DriverTable driver = new DriverTable();
@@ -299,6 +287,39 @@ namespace DriverInformation.Controllers
 
             db.Entry(driver).State = EntityState.Modified;
             db.SaveChanges();
+
+            //Delete previous hobbies
+            var mapList = db.MapDriverHobs.Where(x => x.DriverId == model.DriverId)
+                        .Select(x => new MappingModel
+                        {
+                            MapId = x.MapId,
+                            DriverId = x.DriverId == null ? 0 : x.DriverId.Value,
+                            HobbyId = x.HobbyId == null ? 0 : x.HobbyId.Value,
+                        }).ToList();
+
+            foreach(var map in mapList)
+            {
+                var delMap = db.MapDriverHobs.Find(map.MapId);
+                db.MapDriverHobs.Remove(delMap);
+                db.SaveChanges();
+            }
+           
+            //>_Adding to Mapping Table.........
+            MapDriverHob mappingDH = new MapDriverHob();
+            mappingDH.MapId = model.MapId;
+
+            foreach (var hob in model.HobList)
+            {
+                if (hob.IsActive)
+                {
+                    mappingDH.DriverId = driver.DriverId;
+                    mappingDH.HobbyId = hob.HobbyId;
+                    db.MapDriverHobs.Add(mappingDH);
+                    db.SaveChanges();
+                }
+            }
+            //>_Added to Mapping Table.........
+
             return RedirectToAction("Index");
         }
 
