@@ -209,6 +209,7 @@
     <Content Include="Views\Driver\Create.cshtml" />
     <Content Include="Views\Driver\Edit.cshtml" />
     <Content Include="Views\Driver\Active.cshtml" />
+    <Content Include="Views\Driver\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

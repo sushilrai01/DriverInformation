@@ -63,6 +63,27 @@ namespace DriverInformation.Controllers
 
             return RedirectToAction("Index");
         }
+
+        //GET: Driver/Details/id
+        public ActionResult Details(int? id)
+        {
+            var DriverInfo = from drivertbl in db.DriverTables
+                             join gendertbl in db.GenderTables on drivertbl.GenderId equals gendertbl.GenderId
+                             join activitytbl in db.ActivityTables on drivertbl.IsActive equals activitytbl.IsActive
+                             join maptbl in db.MapDriverHobs on drivertbl.DriverId equals maptbl.DriverId
+                             join hobtbl in db.HobbyTables on maptbl.HobbyId equals hobtbl.HobbyId
+                             where drivertbl.DriverId == id 
+                             select new DriverInfoModel
+                             {
+                                 DriverId = drivertbl.DriverId,
+                                 DriverName = drivertbl.Name,
+                                 ContactNo = drivertbl.ContactNo,
+                                 Category = gendertbl.Category,
+                                 Hobby = hobtbl.Hobby,
+                                 Available = activitytbl.Available,
+                             };
+            return View(DriverInfo.ToList());    
+        }
         //GET: Driver/Create
         public ActionResult Create()
         {
