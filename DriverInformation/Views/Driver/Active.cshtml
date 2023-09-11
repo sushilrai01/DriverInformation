@@ -67,10 +67,10 @@
                         <td>
 
                             @Html.ActionLink("Edit", "Edit", null, new { id = item.DriverId }, new { @class = " btn btn-info " })
+                            @Html.ActionLink("Show Details", "Details", null, new { id = item.DriverId }, new { @class = " btn btn-success " })
                             <span class="m-1 mb-2">
                                 @Html.ActionLink("Delete", "Delete", null, new { id = item.DriverId }, new { @class = " btn btn-danger " })
                             </span>
-                            @Html.ActionLink("Show Details", "Details", null, new { id = item.DriverId }, new { @class = " btn btn-success " })
                         </td>
 
                     </tr>

@@ -29,6 +29,7 @@
           <Property Name="Dancing" Type="bit" />
           <Property Name="Reading" Type="bit" />
           <Property Name="Travelling" Type="bit" />
+          <Property Name="ImageFilePath" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="GenderTable">
           <Key>
@@ -123,6 +124,7 @@
           <Property Name="Dancing" Type="Boolean" />
           <Property Name="Reading" Type="Boolean" />
           <Property Name="Travelling" Type="Boolean" />
+          <Property Name="ImageFilePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="GenderTable">
           <Key>
@@ -204,6 +206,7 @@
           <EntitySetMapping Name="DriverTables">
             <EntityTypeMapping TypeName="DriverManagementModel.DriverTable">
               <MappingFragment StoreEntitySet="DriverTable">
+                <ScalarProperty Name="ImageFilePath" ColumnName="ImageFilePath" />
                 <ScalarProperty Name="Travelling" ColumnName="Travelling" />
                 <ScalarProperty Name="Reading" ColumnName="Reading" />
                 <ScalarProperty Name="Dancing" ColumnName="Dancing" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 using System.Net;
 using System.Data.Entity;
 using DriverInformation.Models;
@@ -102,7 +103,7 @@ namespace DriverInformation.Controllers
         //POST: Driver/Create
         [HttpPost]
         [ValidateAntiForgeryToken ]
-        public  ActionResult Create(DriverInfoModel model)
+        public  ActionResult Create(DriverInfoModel model, HttpPostedFileBase file )
         {
             if(!ModelState.IsValid)
             {
@@ -123,6 +124,29 @@ namespace DriverInformation.Controllers
             drivertbl.Reading = model.Reading;
             drivertbl.Travelling = model.Travelling;
 
+            //>_ File Uploading...
+            if (file != null && file.ContentLength > 0)
+            {
+                try
+                {
+                    string path = Path.Combine(Server.MapPath("~/UploadedImages"), Path.GetFileName(file.FileName));
+                    file.SaveAs(path);
+                    ViewBag.Message = "File uploaded successfully";
+                    model.ImageFilePath = path; //Saving file path to Model
+                    drivertbl.ImageFilePath = model.ImageFilePath;
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                }
+            }
+            else
+            {
+                ViewBag.Message = " You have not specified a file.";
+            }
+
+            //>_ File Uploading...
+
             //----Hobby list from HObby table-----
             if (model.HobList.Count(x => x.IsActive ) == 0)
             {
@@ -142,7 +166,7 @@ namespace DriverInformation.Controllers
                 sb.Remove(sb.ToString().LastIndexOf(","), 1);
 
                 //--( > Start! <)--String concatenation for Hobbies in columns-----
-              if(!model.Basketball & !model.Football & !model.Cricket & !model.Singing & !model.Dancing & !model.Reading & !model.Travelling)
+              if(!model.Basketball && !model.Football && !model.Cricket && !model.Singing && !model.Dancing && !model.Reading && !model.Travelling)
                 {
                     return View(model.AddModelError());
                 }
@@ -168,7 +192,7 @@ namespace DriverInformation.Controllers
             db.DriverTables.Add(drivertbl);
             db.SaveChanges();
 
-            //>_Adding to Mapping Table.........
+            //>_Adding to Mapping Table*******
             MapDriverHob mappingDH = new MapDriverHob();
             mappingDH.MapId = model.MapId;
 
@@ -182,9 +206,20 @@ namespace DriverInformation.Controllers
                     db.SaveChanges();
                 }
             }
-            //>_Added to Mapping Table.........
+            //>_Added to Mapping Table****
 
-            return RedirectToAction("Index");
+
+            DriverInfoModel model1 = new DriverInfoModel();
+
+            model1.GenList = db.GenderTables
+                               .Select(x => new DropdownModel { ID = x.GenderId, TEXT = x.Category }).ToList();
+            model1.ActList = db.ActivityTables
+                              .Select(x => new DropdownModel { ID = x.IsActive, TEXT = x.Available }).ToList();
+            model1.HobList = db.HobbyTables
+                                 .Select(x => new HobbyModel { HobbyId = x.HobbyId, Hobby = x.Hobby, IsActive = x.IsActive == null ? false : x.IsActive.Value }).ToList();
+
+            return View(model1);
+            //return RedirectToAction("Index");
         }
 
         //GET: Driver/Edit/id

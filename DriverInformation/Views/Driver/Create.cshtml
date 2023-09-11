@@ -18,7 +18,7 @@
         <div class="row">
             <div class="mx-auto col-10 col-md-8 col-lg-6">
 
-                @using (Html.BeginForm())
+                @using (Html.BeginForm("Create","Driver",FormMethod.Post,new { enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
                     <p><span>@Html.ActionLink(" Go Back", "Index", null, new { @class = " btn btn-secondary " })</span></p>
@@ -123,11 +123,21 @@
                             @Html.ValidationMessageFor(model => model.ActiveId, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <label for="file">Upload File:</label>
+                            <input type="file" name="file" id="file" />
+                            @ViewBag.Message
+                            <br><br>
+                        </div>
+                    </div>
                     <br />
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-4">
                             <input type="submit" value="Create" class="btn btn-primary" />
                         </div>
+
                     </div>
                 }
             </div>

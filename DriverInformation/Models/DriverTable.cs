@@ -27,6 +27,7 @@ namespace DriverInformation.Models
         public Nullable<bool> Dancing { get; set; }
         public Nullable<bool> Reading { get; set; }
         public Nullable<bool> Travelling { get; set; }
+        public string ImageFilePath { get; set; }
     
         public virtual ActivityTable ActivityTable { get; set; }
         public virtual GenderTable GenderTable { get; set; }
