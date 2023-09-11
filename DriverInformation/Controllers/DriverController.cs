@@ -105,7 +105,7 @@ namespace DriverInformation.Controllers
         //POST: Driver/Create
         [HttpPost]
         [ValidateAntiForgeryToken ]
-        public  ActionResult Create(DriverInfoModel model, List<HttpPostedFileBase> files, HttpPostedFileBase file )
+        public  ActionResult Create(DriverInfoModel model, List<HttpPostedFileBase> files )
          {
             if(!ModelState.IsValid)
             {
@@ -126,31 +126,6 @@ namespace DriverInformation.Controllers
             drivertbl.Reading = model.Reading;
             drivertbl.Travelling = model.Travelling;
 
-            //>_ File Uploading...
-            if (files != null && files.Count() > 0)
-            {
-                
-                try
-                {
-                    string filename = Path.GetFileName(files[0].FileName);
-                    string DB_filepath = "~/UploadedImages/" + filename ;
-                    string UploadPath = Path.Combine(Server.MapPath("~/UploadedImages"), filename); //Physical File Path (on Folder)
-                    files[0].SaveAs(UploadPath); //Saving to physical path(folder)
-                    ViewBag.Message = "File uploaded successfully";
-                    model.ImageFilePath = DB_filepath; //Saving file path to DataBase
-                    drivertbl.ImageFilePath = model.ImageFilePath;
-                }
-                catch (Exception ex)
-                {
-                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
-                }
-            }
-            else
-            {
-                ViewBag.Message = " You have not specified a file.";
-            }
-
-            //>_ File Uploading End...
 
             //----Hobby list from HObby table-----
             if (model.HobList.Count(x => x.IsActive ) == 0)
@@ -196,6 +171,50 @@ namespace DriverInformation.Controllers
 
             db.DriverTables.Add(drivertbl);
             db.SaveChanges();
+
+            //>_ File Uploading...
+            if (files != null && files.Count() > 0)
+            {
+                ImageMapModel imageMapModel = new ImageMapModel();
+                MapImgDriver imgDriver = new MapImgDriver();
+
+
+                foreach (var file in files)
+                {
+                    try
+                    {
+                        string filename = Path.GetFileName(file.FileName);
+                        string DB_filepath = "~/UploadedImages/" + filename;
+                        string UploadPath = Path.Combine(Server.MapPath("~/UploadedImages"), filename); //Physical File Path (on Folder)
+                        file.SaveAs(UploadPath); //Saving to physical path(folder)
+                        ViewBag.Message = "File uploaded successfully";
+                        imageMapModel.Filepath = DB_filepath; //Saving file path to DataBase
+                        imageMapModel.DriverId = drivertbl.DriverId;
+
+                        //Mapping tables of db with model
+
+                        imgDriver.Filepath = imageMapModel.Filepath;
+                        imgDriver.DriverId = imageMapModel.DriverId;
+
+                        model.ImageFilePath = DB_filepath;              //___Can remove later:sthg had to be posted since 
+                        drivertbl.ImageFilePath = model.ImageFilePath; //its is defined not null//First make it null in db
+
+                        db.MapImgDrivers.Add(imgDriver);
+                        db.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                    }
+                }
+
+            }
+            else
+            {
+                ViewBag.Message = " You have not specified a file.";
+            }
+
+            //>_ File Uploading xEnd...
 
             //>_Adding to Mapping Table*******
             MapDriverHob mappingDH = new MapDriverHob();

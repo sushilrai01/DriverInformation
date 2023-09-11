@@ -21,6 +21,7 @@
                 @using (Html.BeginForm("Create", "Driver", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.DriverId)
                     <p><span>@Html.ActionLink(" Go Back", "Index", null, new { @class = " btn btn-secondary " })</span></p>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -126,14 +127,14 @@
 
                     <div class="form-group">
                         <div class="col-md-4">
-                            @Html.LabelFor(model => model.ImageFilePath, "Upload Files:", htmlAttributes: new { @class = "control-label " })
+                            @Html.LabelFor(model => model.ImageFilePath, "Upload Images:", htmlAttributes: new { @class = "control-label " })
                             @*<label for="files">Upload File:</label>*@
                             <input type="file" name="files" id="files" multiple required />
                             @ViewBag.Message
 
                             @*@Html.TextBoxFor(model => model.ImageFilePath, new { type = "file", id = "file" })*@
                             @*@Html.ValidationMessageFor(model => model.ImageFilePath, "", new { @class = "text-danger" })*@
-                            <br><br>
+                            @*<br><br>*@
                         </div>
                     </div>
 
@@ -143,9 +144,6 @@
                             @*<label for="files">Upload File:</label>*@
                             <input type="file" name="files" id="files" multiple required />
                             @ViewBag.Message
-
-                            @*@Html.TextBoxFor(model => model.ImageFilePath, new { type = "file", id = "file" })*@
-                            @*@Html.ValidationMessageFor(model => model.ImageFilePath, "", new { @class = "text-danger" })*@
                             <br><br>
                         </div>
                     </div>

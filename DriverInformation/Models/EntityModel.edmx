@@ -58,7 +58,7 @@
           <Key>
             <PropertyRef Name="ImageId" />
           </Key>
-          <Property Name="ImageId" Type="int" Nullable="false" />
+          <Property Name="ImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DriverId" Type="int" Nullable="false" />
           <Property Name="Filepath" Type="varchar(max)" Nullable="false" />
         </EntityType>

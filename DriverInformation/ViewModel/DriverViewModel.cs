@@ -69,6 +69,7 @@ namespace DriverInformation.ViewModel
         public string Category { get; set; }
         public int ActiveId { get; set; }
         public string Available { get; set; }
+        public int ImageId { get; set; }    
         public string ImageFilePath { get; set; }   //To show Image
         public string DocsFilePath { get; set; }   //To show Documents
 
