@@ -29,7 +29,7 @@
           <Property Name="Dancing" Type="bit" />
           <Property Name="Reading" Type="bit" />
           <Property Name="Travelling" Type="bit" />
-          <Property Name="ImageFilePath" Type="varchar(max)" />
+          <Property Name="ImageFilePath" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="GenderTable">
           <Key>
@@ -124,7 +124,7 @@
           <Property Name="Dancing" Type="Boolean" />
           <Property Name="Reading" Type="Boolean" />
           <Property Name="Travelling" Type="Boolean" />
-          <Property Name="ImageFilePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ImageFilePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="GenderTable">
           <Key>

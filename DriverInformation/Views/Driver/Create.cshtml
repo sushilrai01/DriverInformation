@@ -126,13 +126,17 @@
 
                     <div class="form-group">
                         <div class="col-md-4">
-                            <label for="file">Upload File:</label>
-                            <input type="file" name="file" id="file" />
+                            @Html.LabelFor(model => model.ImageFilePath, "Upload Files:", htmlAttributes: new { @class = "control-label " })
+                            @*<label for="files">Upload File:</label>*@
+                            <input type="file" name="files" id="files" multiple required />
                             @ViewBag.Message
+
+                            @*@Html.TextBoxFor(model => model.ImageFilePath, new { type = "file", id = "file" })*@
+                            @*@Html.ValidationMessageFor(model => model.ImageFilePath, "", new { @class = "text-danger" })*@
                             <br><br>
                         </div>
                     </div>
-                    <br />
+                    @*<br />*@
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-4">
                             <input type="submit" value="Create" class="btn btn-primary" />

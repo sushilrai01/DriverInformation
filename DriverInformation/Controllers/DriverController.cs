@@ -103,7 +103,7 @@ namespace DriverInformation.Controllers
         //POST: Driver/Create
         [HttpPost]
         [ValidateAntiForgeryToken ]
-        public  ActionResult Create(DriverInfoModel model, HttpPostedFileBase file )
+        public  ActionResult Create(DriverInfoModel model, List<HttpPostedFileBase> files )
         {
             if(!ModelState.IsValid)
             {
@@ -125,13 +125,15 @@ namespace DriverInformation.Controllers
             drivertbl.Travelling = model.Travelling;
 
             //>_ File Uploading...
-            if (file != null && file.ContentLength > 0)
+            if (files != null && files.Count() > 0)
             {
+                
                 try
                 {
-                    string path = Path.Combine(Server.MapPath("~/UploadedImages"), Path.GetFileName(file.FileName));
-                    file.SaveAs(path);
+                    string path = Path.Combine(Server.MapPath("~/UploadedImages"), Path.GetFileName(files[0].FileName));
+                    files[0].SaveAs(path);
                     ViewBag.Message = "File uploaded successfully";
+
                     model.ImageFilePath = path; //Saving file path to Model
                     drivertbl.ImageFilePath = model.ImageFilePath;
                 }
@@ -145,7 +147,7 @@ namespace DriverInformation.Controllers
                 ViewBag.Message = " You have not specified a file.";
             }
 
-            //>_ File Uploading...
+            //>_ File Uploading End...
 
             //----Hobby list from HObby table-----
             if (model.HobList.Count(x => x.IsActive ) == 0)
