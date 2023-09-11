@@ -82,8 +82,10 @@ namespace DriverInformation.Controllers
                                  Category = gendertbl.Category,
                                  Hobby = hobtbl.Hobby,
                                  Available = activitytbl.Available,
+                                 ImageFilePath = drivertbl.ImageFilePath,
                              };
-            return View(DriverInfo.ToList());    
+            //return View(DriverInfo.ToList());
+            return View(DriverInfo.FirstOrDefault());
         }
         //GET: Driver/Create
         public ActionResult Create()
@@ -104,7 +106,7 @@ namespace DriverInformation.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken ]
         public  ActionResult Create(DriverInfoModel model, List<HttpPostedFileBase> files )
-        {
+         {
             if(!ModelState.IsValid)
             {
                 return View(model);
@@ -130,11 +132,12 @@ namespace DriverInformation.Controllers
                 
                 try
                 {
-                    string path = Path.Combine(Server.MapPath("~/UploadedImages"), Path.GetFileName(files[0].FileName));
-                    files[0].SaveAs(path);
+                    string filename = Path.GetFileName(files[0].FileName);
+                    string DB_filepath = "~/UploadedImages/" + filename ;
+                    string UploadPath = Path.Combine(Server.MapPath("~/UploadedImages"), filename); //Physical File Path (on Folder)
+                    files[0].SaveAs(UploadPath); //Saving to physical path(folder)
                     ViewBag.Message = "File uploaded successfully";
-
-                    model.ImageFilePath = path; //Saving file path to Model
+                    model.ImageFilePath = DB_filepath; //Saving file path to DataBase
                     drivertbl.ImageFilePath = model.ImageFilePath;
                 }
                 catch (Exception ex)
@@ -387,6 +390,21 @@ namespace DriverInformation.Controllers
             var driver = db.DriverTables.Find(id);
             db.DriverTables.Remove(driver);
             db.SaveChanges();
+            //Delete mapped rows(hobbies) of respective IDs
+            var mapList = db.MapDriverHobs.Where(x => x.DriverId == id)
+                       .Select(x => new MappingModel
+                       {
+                           MapId = x.MapId,
+                           DriverId = x.DriverId == null ? 0 : x.DriverId.Value,
+                           HobbyId = x.HobbyId == null ? 0 : x.HobbyId.Value,
+                       }).ToList();
+
+            foreach (var map in mapList)
+            {
+                var delMap = db.MapDriverHobs.Find(map.MapId);
+                db.MapDriverHobs.Remove(delMap);
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         } 
     }
