@@ -30,5 +30,6 @@ namespace DriverInformation.Models
         public virtual DbSet<GenderTable> GenderTables { get; set; }
         public virtual DbSet<HobbyTable> HobbyTables { get; set; }
         public virtual DbSet<MapDriverHob> MapDriverHobs { get; set; }
+        public virtual DbSet<MapImgDriver> MapImgDrivers { get; set; }
     }
 }

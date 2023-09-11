@@ -18,7 +18,7 @@
         <div class="row">
             <div class="mx-auto col-10 col-md-8 col-lg-6">
 
-                @using (Html.BeginForm("Create","Driver",FormMethod.Post,new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("Create", "Driver", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
                     <p><span>@Html.ActionLink(" Go Back", "Index", null, new { @class = " btn btn-secondary " })</span></p>
@@ -55,7 +55,7 @@
                             @for (var i = 0; i < Model.HobList.Count(); i++)
                             {
                                 <span class="m-2">
-                                    @Html.HiddenFor(model => model.DriverId) 
+                                    @Html.HiddenFor(model => model.DriverId)
                                     @Html.HiddenFor(item => item.HobList[i].HobbyId)
                                     @Html.HiddenFor(item => item.HobList[i].Hobby)
                                     @Html.DisplayFor(item => item.HobList[i].Hobby)
@@ -136,7 +136,20 @@
                             <br><br>
                         </div>
                     </div>
-                    @*<br />*@
+
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.ImageFilePath, "Upload Files:", htmlAttributes: new { @class = "control-label " })
+                            @*<label for="files">Upload File:</label>*@
+                            <input type="file" name="files" id="files" multiple required />
+                            @ViewBag.Message
+
+                            @*@Html.TextBoxFor(model => model.ImageFilePath, new { type = "file", id = "file" })*@
+                            @*@Html.ValidationMessageFor(model => model.ImageFilePath, "", new { @class = "text-danger" })*@
+                            <br><br>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-4">
                             <input type="submit" value="Create" class="btn btn-primary" />

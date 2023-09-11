@@ -54,6 +54,14 @@
           <Property Name="DriverId" Type="int" />
           <Property Name="HobbyId" Type="int" />
         </EntityType>
+        <EntityType Name="MapImgDriver">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="int" Nullable="false" />
+          <Property Name="DriverId" Type="int" Nullable="false" />
+          <Property Name="Filepath" Type="varchar(max)" Nullable="false" />
+        </EntityType>
         <Association Name="FK_DriverTable_ActivityTable">
           <End Role="ActivityTable" Type="Self.ActivityTable" Multiplicity="0..1" />
           <End Role="DriverTable" Type="Self.DriverTable" Multiplicity="*" />
@@ -84,6 +92,7 @@
           <EntitySet Name="GenderTable" EntityType="Self.GenderTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HobbyTable" EntityType="Self.HobbyTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MapDriverHob" EntityType="Self.MapDriverHob" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MapImgDriver" EntityType="Self.MapImgDriver" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_DriverTable_ActivityTable" Association="Self.FK_DriverTable_ActivityTable">
             <End Role="ActivityTable" EntitySet="ActivityTable" />
             <End Role="DriverTable" EntitySet="DriverTable" />
@@ -180,6 +189,7 @@
             <End Role="DriverTable" EntitySet="DriverTables" />
           </AssociationSet>
           <EntitySet Name="MapDriverHobs" EntityType="DriverManagementModel.MapDriverHob" />
+          <EntitySet Name="MapImgDrivers" EntityType="DriverManagementModel.MapImgDriver" />
         </EntityContainer>
         <EntityType Name="MapDriverHob">
           <Key>
@@ -188,6 +198,14 @@
           <Property Name="MapId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DriverId" Type="Int32" />
           <Property Name="HobbyId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="MapImgDriver">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="Int32" Nullable="false" />
+          <Property Name="DriverId" Type="Int32" Nullable="false" />
+          <Property Name="Filepath" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -246,6 +264,15 @@
                 <ScalarProperty Name="HobbyId" ColumnName="HobbyId" />
                 <ScalarProperty Name="DriverId" ColumnName="DriverId" />
                 <ScalarProperty Name="MapId" ColumnName="MapId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MapImgDrivers">
+            <EntityTypeMapping TypeName="DriverManagementModel.MapImgDriver">
+              <MappingFragment StoreEntitySet="MapImgDriver">
+                <ScalarProperty Name="Filepath" ColumnName="Filepath" />
+                <ScalarProperty Name="DriverId" ColumnName="DriverId" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

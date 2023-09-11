@@ -36,6 +36,13 @@ namespace DriverInformation.ViewModel
         public int DriverId { get; set; }
         public int HobbyId { get; set; }
     }
+
+    public class ImageMapModel
+    {
+        public int ImageId { get; set; }
+        public int DriverId { get; set; }
+        public string Filepath { get; set; }
+    }
     public class DropdownModel
     {
         public int ID { get;set; } 
@@ -62,7 +69,9 @@ namespace DriverInformation.ViewModel
         public string Category { get; set; }
         public int ActiveId { get; set; }
         public string Available { get; set; }
-        public string ImageFilePath { get; set; }   
+        public string ImageFilePath { get; set; }   //To show Image
+        public string DocsFilePath { get; set; }   //To show Documents
+
         //Hobbies.......
         public bool Football { get; set; }
         public bool Cricket { get; set; }

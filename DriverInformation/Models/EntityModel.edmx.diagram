@@ -11,7 +11,8 @@
         <EntityTypeShape EntityType="DriverManagementModel.HobbyTable" Width="1.5" PointX="5.125" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="DriverManagementModel.FK_DriverTable_ActivityTable" ManuallyRouted="false" />
         <AssociationConnector Association="DriverManagementModel.FK_DriverTable_GenderTable" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="DriverManagementModel.MapDriverHob" Width="1.5" PointX="5.125" PointY="3.125" />
+        <EntityTypeShape EntityType="DriverManagementModel.MapDriverHob" Width="1.5" PointX="7" PointY="1" />
+        <EntityTypeShape EntityType="DriverManagementModel.MapImgDriver" Width="1.5" PointX="7" PointY="3.25" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

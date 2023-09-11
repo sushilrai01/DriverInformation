@@ -105,7 +105,7 @@ namespace DriverInformation.Controllers
         //POST: Driver/Create
         [HttpPost]
         [ValidateAntiForgeryToken ]
-        public  ActionResult Create(DriverInfoModel model, List<HttpPostedFileBase> files )
+        public  ActionResult Create(DriverInfoModel model, List<HttpPostedFileBase> files, HttpPostedFileBase file )
          {
             if(!ModelState.IsValid)
             {
