@@ -111,7 +111,7 @@ namespace DriverInformation.Controllers
         //POST: Driver/Create
         [HttpPost]
         [ValidateAntiForgeryToken ]
-        public  ActionResult Create(DriverInfoModel model, List<HttpPostedFileBase> files )
+        public  ActionResult Create(DriverInfoModel model, List<HttpPostedFileBase> fileImg, List<HttpPostedFileBase> files)
          {
             if(!ModelState.IsValid)
             {
@@ -179,26 +179,62 @@ namespace DriverInformation.Controllers
             db.SaveChanges();
 
             //>_ File Uploading...
-            if (files != null && files.Count() > 0)
+            if ((files != null && files.Count() > 0) && (fileImg != null && fileImg.Count() > 0))
             {
-                //ImageMapModel imageMapModel = new ImageMapModel();
+               
                 MapImgDriver imgDriver = new MapImgDriver();
+                int counterPdf = 0;
+                int counterImg = 0; 
 
-
-                foreach (var file in files)
+                foreach (var countImg in fileImg)// for pdf files
                 {
-                    try
+                    if (countImg.ContentType == "image/jpeg") counterImg++;
+                    //else ModelState.AddModelError(string.Empty, "Please upload a valid Image file.");
+                     //else  ModelState.AddModelError(string.Empty, "Please upload a valid Image/Pdf file.");                    
+                }
+                foreach (var countPdf in files)
+                {
+                    if (countPdf.ContentType == "application/pdf") counterPdf++;
+                }
+
+                if(counterImg == fileImg.Count() && counterPdf == files.Count())
+                {
+                    //Upload PDFs
+                    foreach (var item in files)
                     {
-                        string filename = Path.GetFileName(file.FileName);
+                            string filename = Path.GetFileName(item.FileName);
+                            string DB_filepath = "~/UploadedImages/" + filename;
+                            string UploadPath = Path.Combine(Server.MapPath("~/UploadedImages"), filename); //Physical File Path (on Folder)
+                            item.SaveAs(UploadPath); //Saving to physical path(folder)
+                            ViewBag.Message = "File uploaded successfully";
+                            //imageMapModel.Filepath = DB_filepath; //Saving file path to DataBase
+                            //imageMapModel.DriverId = drivertbl.DriverId;
+
+                            //Mapping tables of db with model
+                            imgDriver.Filename = filename;
+                            imgDriver.Filepath = DB_filepath;
+                            imgDriver.DriverId = drivertbl.DriverId;
+
+                            model.ImageFilePath = DB_filepath;              //___Can remove later:sthg had to be posted since 
+                            drivertbl.ImageFilePath = model.ImageFilePath; //its is defined not null//First make it null in db
+
+                            db.MapImgDrivers.Add(imgDriver);
+                            db.SaveChanges();
+          
+                    }
+                    //Upload Images
+                    foreach (var item in fileImg)
+                    {
+                        string filename = Path.GetFileName(item.FileName);
                         string DB_filepath = "~/UploadedImages/" + filename;
                         string UploadPath = Path.Combine(Server.MapPath("~/UploadedImages"), filename); //Physical File Path (on Folder)
-                        file.SaveAs(UploadPath); //Saving to physical path(folder)
-                        ViewBag.Message = "File uploaded successfully";
+                        item.SaveAs(UploadPath); //Saving to physical path(folder)
+                        ViewBag.Message = "FileImage uploaded successfully";
                         //imageMapModel.Filepath = DB_filepath; //Saving file path to DataBase
                         //imageMapModel.DriverId = drivertbl.DriverId;
 
                         //Mapping tables of db with model
-                        imgDriver.Filename = filename;  
+                        imgDriver.Filename = filename;
                         imgDriver.Filepath = DB_filepath;
                         imgDriver.DriverId = drivertbl.DriverId;
 
@@ -207,13 +243,12 @@ namespace DriverInformation.Controllers
 
                         db.MapImgDrivers.Add(imgDriver);
                         db.SaveChanges();
+
                     }
-                    catch (Exception ex)
-                    {
-                        ViewBag.Message = "ERROR:" + ex.Message.ToString();
-                    }
+
                 }
 
+                else ModelState.AddModelError(string.Empty, "Please upload a valid Image/Pdf file.");
             }
             else
             {
