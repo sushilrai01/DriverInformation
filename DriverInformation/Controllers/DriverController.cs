@@ -175,7 +175,7 @@ namespace DriverInformation.Controllers
             //>_ File Uploading...
             if (files != null && files.Count() > 0)
             {
-                ImageMapModel imageMapModel = new ImageMapModel();
+                //ImageMapModel imageMapModel = new ImageMapModel();
                 MapImgDriver imgDriver = new MapImgDriver();
 
 
@@ -188,13 +188,13 @@ namespace DriverInformation.Controllers
                         string UploadPath = Path.Combine(Server.MapPath("~/UploadedImages"), filename); //Physical File Path (on Folder)
                         file.SaveAs(UploadPath); //Saving to physical path(folder)
                         ViewBag.Message = "File uploaded successfully";
-                        imageMapModel.Filepath = DB_filepath; //Saving file path to DataBase
-                        imageMapModel.DriverId = drivertbl.DriverId;
+                        //imageMapModel.Filepath = DB_filepath; //Saving file path to DataBase
+                        //imageMapModel.DriverId = drivertbl.DriverId;
 
                         //Mapping tables of db with model
 
-                        imgDriver.Filepath = imageMapModel.Filepath;
-                        imgDriver.DriverId = imageMapModel.DriverId;
+                        imgDriver.Filepath = DB_filepath;
+                        imgDriver.DriverId = drivertbl.DriverId;
 
                         model.ImageFilePath = DB_filepath;              //___Can remove later:sthg had to be posted since 
                         drivertbl.ImageFilePath = model.ImageFilePath; //its is defined not null//First make it null in db
@@ -424,6 +424,23 @@ namespace DriverInformation.Controllers
                 db.MapDriverHobs.Remove(delMap);
                 db.SaveChanges();
             }
+
+            //Delete mapped rows(Files) of respective IDs
+            var fileList = db.MapImgDrivers.Where(x => x.DriverId == id)
+                       .Select(x => new ImageMapModel
+                       {
+                           ImageId = x.ImageId,
+                           DriverId = x.DriverId,
+                           Filepath = x.Filepath,
+                       }).ToList();
+
+            foreach (var file in fileList)
+            {
+                var delFile = db.MapImgDrivers.Find(file.ImageId);
+                db.MapImgDrivers.Remove(delFile);
+                db.SaveChanges();
+            }
+
             return RedirectToAction("Index");
         } 
     }
