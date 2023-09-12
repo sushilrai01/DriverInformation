@@ -44,8 +44,8 @@
                 </tr>
 
                 @*@foreach (var item in Model)
-                {*@
-                 @*<tr>
+                {
+                    <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.DriverId)
                         </td>
@@ -63,9 +63,9 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Available)
-                        </td>*@
-                 @*</tr>*@
-                @*}*@
+                        </td>
+                    </tr>
+                }*@
 
                 <tr>
                     <td>
@@ -92,8 +92,17 @@
         </div>
         <br />
         <hr />
+
+            @foreach (var item in Model.FileList)
+            {
+                <div class="h-100 d-flex align-items-center justify-content-center">
+                    <embed src="@Url.Content(item.Filepath)" alt="Image" width="400" height="450" />
+                </div>
+            }
+
+
         <div class="h-100 d-flex align-items-center justify-content-center">
-            <img src="@Url.Content(Model.ImageFilePath)" alt="Image" width="250" height="250"  />
+            @*<embed src="@Url.Content(Model.ImageFilePath)" alt="Image" width="250" height="250"  />*@
 
         </div>
         <br />

@@ -86,6 +86,7 @@ namespace DriverInformation.ViewModel
         public string Hobby { get; set; } //$ >_Concatenated hobbies here
         public int MapId { get; set; }  
 
+        public List<ImageMapModel> FileList { get; set; }
         public List<HobbiesModel> HobbyList { get; set;}
         public List<HobbyModel> HobList { get; set; }
         public List<DropdownModel> GenList { get; set; }
@@ -95,6 +96,12 @@ namespace DriverInformation.ViewModel
         {
             throw new NotImplementedException("!!Please Select a hobby!");
         }
+    }
+
+    public class DriverDetailModel
+    {
+        public List<DriverInfoModel> infomodel  { get; set; }   
+        public List<ImageMapModel> FileList { get; set; }
     }
 
 }

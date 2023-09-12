@@ -68,11 +68,10 @@ namespace DriverInformation.Controllers
         //GET: Driver/Details/id
         public ActionResult Details(int? id)
         {
-            var DriverInfo = from drivertbl in db.DriverTables
+            DriverInfoModel model = new DriverInfoModel();
+             var DriverInfo = from drivertbl in db.DriverTables
                              join gendertbl in db.GenderTables on drivertbl.GenderId equals gendertbl.GenderId
                              join activitytbl in db.ActivityTables on drivertbl.IsActive equals activitytbl.IsActive
-                             join maptbl in db.MapDriverHobs on drivertbl.DriverId equals maptbl.DriverId
-                             join hobtbl in db.HobbyTables on maptbl.HobbyId equals hobtbl.HobbyId
                              where drivertbl.DriverId == id 
                              select new DriverInfoModel
                              {
@@ -80,12 +79,19 @@ namespace DriverInformation.Controllers
                                  DriverName = drivertbl.Name,
                                  ContactNo = drivertbl.ContactNo,
                                  Category = gendertbl.Category,
-                                 Hobby = hobtbl.Hobby,
+                                 Hobby = drivertbl.Hobby,
                                  Available = activitytbl.Available,
-                                 ImageFilePath = drivertbl.ImageFilePath,
+                                 
                              };
+            model = DriverInfo.FirstOrDefault();
+            model.FileList = db.MapImgDrivers.Where(x => x.DriverId == id).Select(x => new ImageMapModel
+            {
+                ImageId = x.ImageId,
+                Filepath = x.Filepath,
+                DriverId = x.DriverId,
+            }).ToList();
             //return View(DriverInfo.ToList());
-            return View(DriverInfo.FirstOrDefault());
+            return View(model);
         }
         //GET: Driver/Create
         public ActionResult Create()
