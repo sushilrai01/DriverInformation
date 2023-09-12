@@ -95,9 +95,18 @@
 
             @foreach (var item in Model.FileList)
             {
-                <div class="h-100 d-flex align-items-center justify-content-center">
-                    <embed src="@Url.Content(item.Filepath)" alt="Image" width="400" height="450" />
+                <div class="row">
+                    <div class="col-md-10 bg-secondary">
+                     <div class="h-100 d-flex align-items-center justify-content-center">
+                         <embed src="@Url.Content(item.Filepath)" alt="Image" width="550" height="550" />   
+                     </div>
+                    </div>
+                    <div class="col-md-2">
+                        @Html.ActionLink("Download", "DownloadFile", null, new { fileid = item.ImageId }, new { @class = " btn btn-primary " })
+                    </div>
                 </div>
+                <br />
+                
             }
 
 

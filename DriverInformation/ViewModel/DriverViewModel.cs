@@ -42,6 +42,7 @@ namespace DriverInformation.ViewModel
         public int ImageId { get; set; }
         public int DriverId { get; set; }
         public string Filepath { get; set; }
+        public string Filename { get; set; }        
     }
     public class DropdownModel
     {
@@ -98,10 +99,6 @@ namespace DriverInformation.ViewModel
         }
     }
 
-    public class DriverDetailModel
-    {
-        public List<DriverInfoModel> infomodel  { get; set; }   
-        public List<ImageMapModel> FileList { get; set; }
-    }
+   
 
 }

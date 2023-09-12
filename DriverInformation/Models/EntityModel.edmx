@@ -61,6 +61,7 @@
           <Property Name="ImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DriverId" Type="int" Nullable="false" />
           <Property Name="Filepath" Type="varchar(max)" Nullable="false" />
+          <Property Name="Filename" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_DriverTable_ActivityTable">
           <End Role="ActivityTable" Type="Self.ActivityTable" Multiplicity="0..1" />
@@ -206,6 +207,7 @@
           <Property Name="ImageId" Type="Int32" Nullable="false" />
           <Property Name="DriverId" Type="Int32" Nullable="false" />
           <Property Name="Filepath" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Filename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -270,6 +272,7 @@
           <EntitySetMapping Name="MapImgDrivers">
             <EntityTypeMapping TypeName="DriverManagementModel.MapImgDriver">
               <MappingFragment StoreEntitySet="MapImgDriver">
+                <ScalarProperty Name="Filename" ColumnName="Filename" />
                 <ScalarProperty Name="Filepath" ColumnName="Filepath" />
                 <ScalarProperty Name="DriverId" ColumnName="DriverId" />
                 <ScalarProperty Name="ImageId" ColumnName="ImageId" />

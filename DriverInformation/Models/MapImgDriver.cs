@@ -17,5 +17,6 @@ namespace DriverInformation.Models
         public int ImageId { get; set; }
         public int DriverId { get; set; }
         public string Filepath { get; set; }
+        public string Filename { get; set; }
     }
 }

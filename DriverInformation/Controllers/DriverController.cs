@@ -198,7 +198,7 @@ namespace DriverInformation.Controllers
                         //imageMapModel.DriverId = drivertbl.DriverId;
 
                         //Mapping tables of db with model
-
+                        imgDriver.Filename = filename;  
                         imgDriver.Filepath = DB_filepath;
                         imgDriver.DriverId = drivertbl.DriverId;
 
@@ -449,5 +449,21 @@ namespace DriverInformation.Controllers
 
             return RedirectToAction("Index");
         } 
+
+        //GET: Driver/DownloadFile/id
+        public ActionResult DownloadFile(int? fileid)
+        {
+            if (fileid != null)
+            {
+                var file = db.MapImgDrivers.Find(fileid);
+                string filename = file.Filename;
+                string staticpath = file.Filepath;
+                string filepath = Server.MapPath(staticpath);   
+                string contentType = MimeMapping.GetMimeMapping(filepath);
+                return File(filepath, contentType,filename);
+
+            }
+            return HttpNotFound();
+        }
     }
 }
